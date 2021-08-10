@@ -1,11 +1,19 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import Head from 'next/head';
 
+import { Sidebar, MiddleSidebar, NotesSection } from '@components/index';
+import { Container } from '@styles/pages';
 
 export default function Home() {
   return (
-    <div >
-      
-    </div>
-  )
+    <>
+      <Head>
+        <title>Simple notes</title>
+      </Head>
+      <Container>
+        <Sidebar />
+        <MiddleSidebar />
+        <NotesSection />
+      </Container>
+    </>
+  );
 }

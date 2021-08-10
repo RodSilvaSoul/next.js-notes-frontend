@@ -3,8 +3,9 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyles = createGlobalStyle`
   * {
 	  box-sizing: border-box;
-		padding: 0;
-		margin: 0;
+	  padding: 0;
+	  margin: 0;
+	  line-height: 1.5;
 	}
 	
 	a {
@@ -19,6 +20,14 @@ const GlobalStyles = createGlobalStyle`
 		@media(max-width: ${(props) => props.theme.breakPoints.md}) {
 			font-size: 87.5%; ;
 		}
+	}
+
+  body {
+	  font-family: 'Roboto', sans-serif;
+  }
+
+	button {
+		cursor: pointer;
 	}
 `;
 
