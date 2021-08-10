@@ -37,6 +37,7 @@ export const Header = styled.div`
 `;
 
 export const NotesTextArea = styled.textarea`
+  width: 100%;
   height: 100%;
   padding: 0.7rem;
   border-radius: 0.3rem;
@@ -57,5 +58,16 @@ export const NotesTextArea = styled.textarea`
   &::placeholder {
     text-align: center;
     font-weight: bold;
+  }
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  > div  {
+    margin-top: 1rem;
   }
 `;
