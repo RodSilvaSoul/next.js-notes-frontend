@@ -1,10 +1,13 @@
 import { AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
-import { Button } from '@components/forms';
+import { Button, InputInline } from '@components/forms';
 import { InputTag } from '@components/forms/input-tag';
 import { useNotes } from '@contexts/notes-contexts';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { theme } from '@styles/theme';
 
 import notesImage from '../../../public/notes.png';
@@ -16,15 +19,34 @@ import {
   Form,
   InnerContainer,
   AddNewNote,
+  ButtonGroup,
 } from './styles';
+
+type FormData = {
+  noteTitle: string;
+  note: string;
+};
+
+const formNoteSchema = yup.object().shape({
+  note: yup.string().required('Your must type a note'),
+  noteTitle: yup.string().required('Your must type a note title'),
+});
 
 export const NotesSection = () => {
   const { isNoteTextAreaVisible, cancelNewNote } = useNotes();
   const [note, setNote] = useState('');
 
-  function handleSubmit(event: FormEvent) {
-    event.preventDefault();
-  }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(formNoteSchema),
+  });
+
+  const handleSentNote: SubmitHandler<FormData> = async (data) => {
+    console.log(data);
+  };
 
   return (
     <Container>
@@ -52,17 +74,24 @@ export const NotesSection = () => {
             animate="show"
             exit="exit"
           >
-            <Header>
-              <h2>Note 1</h2>
-              <InputTag />
-            </Header>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit(handleSentNote)}>
+              <Header>
+                <InputInline
+                  error={errors.noteTitle}
+                  className="note-title"
+                  placeholder="Add a title"
+                  autoComplete="off"
+                  {...register('noteTitle')}
+                />
+                <InputTag />
+              </Header>
               <NotesTextArea
                 aria-label="enter your note"
-                name="note"
+                {...register('note')}
+                value={note}
                 onChange={(event) => setNote(event.target.value)}
               />
-              <div>
+              <ButtonGroup>
                 <Button
                   backgroundColor={theme.pallet.green[500]}
                   type="submit"
@@ -78,7 +107,7 @@ export const NotesSection = () => {
                 >
                   Cancel
                 </Button>
-              </div>
+              </ButtonGroup>
             </Form>
           </InnerContainer>
         )}

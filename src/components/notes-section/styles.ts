@@ -11,27 +11,6 @@ export const Container = styled.section`
 `;
 
 export const Header = styled.div`
-
-  > h2 {
-    font-size: 1.3rem;
-    padding-left: 0.2rem;
-  }
-
-  > input {
-    background-color: transparent;
-    appearance: none;
-    border: 0;
-    color: inherit;
-    padding: 0.2rem 0.3rem;
-    font-family: inherit;
-    font-weight: 400;
-    font-size: 1rem;
-
-    &::placeholder {
-      color: ${(props) => props.theme.pallet.black[200]};
-    }
-  }
-
   margin-bottom: 1.5rem;
 `;
 
@@ -48,8 +27,8 @@ export const NotesTextArea = styled.textarea`
 
   transition: border-color 0.3s;
 
-  &:focus  {
-    border-color: ${(props) => props.theme.pallet.black[700]}
+  &:focus {
+    border-color: ${(props) => props.theme.pallet.black[700]};
   }
 
   resize: none;
@@ -65,13 +44,13 @@ export const Form = styled.form`
   flex-direction: column;
   width: 100%;
   height: 100%;
+`;
 
-  > div  {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 1rem;
-  }
+export const ButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
 `;
 
 export const InnerContainer = styled(motion.div)`

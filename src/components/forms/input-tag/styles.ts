@@ -127,8 +127,11 @@ export const Input = styled.input`
   font-family: inherit;
   color: ${(props) => props.theme.pallet.black[200]};
   font-size: 0.9rem;
+  font-weight: bold;
+
   border: 0;
   border-bottom: 3px solid transparent;
+  
   background-color: transparent;
   outline: none;
 
@@ -140,6 +143,7 @@ export const Input = styled.input`
 
   &::placeholder {
     color: ${(props) => props.theme.pallet.black[200]};
+    font-weight: 500;
   }
 `;
 

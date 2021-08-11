@@ -1,12 +1,9 @@
-import { useState, KeyboardEvent } from 'react';
+import { useState, KeyboardEvent, useCallback } from 'react';
 import { HiOutlineHashtag } from 'react-icons/hi';
 import { IoIosClose } from 'react-icons/io';
 
 import {
-  Container,
-  CreateNewTagDialog,
-  TagContainer,
-  Input,
+  Container, CreateNewTagDialog, TagContainer, Input,
 } from './styles';
 
 type TagData = {
@@ -40,31 +37,25 @@ export const InputTag = () => {
     );
   }
 
-  function handleNewTag() {
-    setTagCount(tagCount + 1);
-    if (tagValue) {
-      setTags([
-        ...tags,
-        {
-          index: tagCount,
-          value: tagValue,
-        },
-      ]);
-      setTagValue('');
-    }
-  }
-
-  function onPressEnter(event: KeyboardEvent<HTMLInputElement>) {
+  const onPressEnter = useCallback((event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      handleNewTag();
+      setTagCount(tagCount + 1);
+      if (tagValue) {
+        setTags([
+          ...tags,
+          {
+            index: tagCount,
+            value: tagValue,
+          },
+        ]);
+        setTagValue('');
+      }
     }
-  }
+  }, [tagValue, tagCount, tags]);
 
   return (
     <Container>
-      <TagContainer
-        shouldAddMarginRight={Boolean(tags.length)}
-      >
+      <TagContainer shouldAddMarginRight={Boolean(tags.length)}>
         {tags.map((tag) => (
           <Tag key={tag.index} {...tag} />
         ))}

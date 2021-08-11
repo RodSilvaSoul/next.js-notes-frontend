@@ -23,6 +23,7 @@ export const theme = {
     },
     red: {
       500: '#E53E3E',
+      600: '#C53030',
     },
   },
 };
