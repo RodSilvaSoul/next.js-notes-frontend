@@ -1,22 +1,32 @@
 import { darken } from 'polished';
 import styled from 'styled-components';
 
-export const Container = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+interface ContainerProps {
+  textColor?: string;
+  backgroundColor?: string;
+}
 
-  background-color: ${(props) => props.theme.pallet.black[500]};
+export const Container = styled.button<ContainerProps>`
+  padding: 0.5rem 0.7rem;
   font-family: inherit;
-  color: #ffff;
-  border: 0;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: ${(props) => props.textColor ?? '#ffff'};
+  background-color: ${(props) => props.backgroundColor ?? props.theme.pallet.black[500]};
+  border: 2px solid transparent;
   border-radius: 0.3rem;
-  padding: 0.2rem 1rem;
-  font-size: 1rem;
+  outline: none;
 
-  transition: background-color 0.3s;
+  transition: all 0.3s;
 
   &:hover {
-    background-color: ${(props) => darken(0.2, props.theme.pallet.black[500])};
+    background-color: ${(props) => {
+    const color = props.backgroundColor ?? props.theme.pallet.black[500];
+    return darken(0.1, color);
+  }};
+  }
+
+  &:focus {
+    border-color: ${(props) => props.theme.pallet.black[200]};
   }
 `;

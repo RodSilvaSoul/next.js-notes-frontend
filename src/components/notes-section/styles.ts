@@ -1,9 +1,8 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 export const Container = styled.section`
-  display: flex;
-  flex-direction: column;
-
+  overflow: hidden;
   color: #ffff;
   background-color: ${(props) => props.theme.pallet.black[300]};
   width: 60%;
@@ -68,6 +67,31 @@ export const Form = styled.form`
   height: 100%;
 
   > div  {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-top: 1rem;
   }
+`;
+
+export const InnerContainer = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+`;
+
+export const AddNewNote = styled(motion.div)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  > h2 {
+    margin-top: 1rem;
+  }
+
+  width: 100%;
+  height: 100%;
 `;

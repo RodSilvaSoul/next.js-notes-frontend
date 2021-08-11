@@ -1,11 +1,10 @@
-import { HtmlHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes } from 'react';
 
 import { Container } from './styles';
 
-interface ButtonProps extends HtmlHTMLAttributes<HTMLButtonElement> {
-  type?: 'submit' | 'reset' | 'button' | undefined
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  textColor?: string;
+  backgroundColor?: string;
 }
 
-export const Button = ({ type = 'button', ...rest }: ButtonProps) => (
-  <Container type={type} {...rest} />
-);
+export const Button = (props: ButtonProps) => <Container {...props} />;

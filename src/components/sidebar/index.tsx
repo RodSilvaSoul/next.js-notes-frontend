@@ -1,4 +1,4 @@
-import { Button } from 'components/forms';
+import { IconButton } from 'components/forms';
 import Link from 'next/link';
 import { RiAddFill } from 'react-icons/ri';
 
@@ -10,9 +10,9 @@ export const Sidebar = () => (
   <Container>
     <Head>
       <h1>Views </h1>
-      <Button aria-label="add a new view">
+      <IconButton aria-label="add a new view">
         <RiAddFill />
-      </Button>
+      </IconButton>
     </Head>
     <Body>
       <SidebarButton>

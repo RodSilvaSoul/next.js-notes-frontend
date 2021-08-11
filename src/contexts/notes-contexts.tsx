@@ -4,6 +4,7 @@ import {
 
 interface NotesContextData {
   addNewNote: () => void;
+  cancelNewNote: () => void;
   isNoteTextAreaVisible: boolean;
 }
 
@@ -17,13 +18,18 @@ export const NotesProvider = ({ children }: NotesProviderProps) => {
   const [isNoteTextAreaVisible, setIsNoteTextAreaVisible] = useState(false);
 
   function addNewNote() {
-    setIsNoteTextAreaVisible(isNoteTextAreaVisible);
+    setIsNoteTextAreaVisible(true);
+  }
+
+  function cancelNewNote() {
+    setIsNoteTextAreaVisible(false);
   }
 
   return (
     <NotesContext.Provider
       value={{
         addNewNote,
+        cancelNewNote,
         isNoteTextAreaVisible,
       }}
     >
