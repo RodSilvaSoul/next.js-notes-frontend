@@ -1,5 +1,5 @@
 import {
-  createContext, useState, ReactNode, useContext,
+  createContext, useState, ReactNode, useContext, useCallback,
 } from 'react';
 
 interface NotesContextData {
@@ -17,13 +17,13 @@ interface NotesProviderProps {
 export const NotesProvider = ({ children }: NotesProviderProps) => {
   const [isNoteTextAreaVisible, setIsNoteTextAreaVisible] = useState(false);
 
-  function addNewNote() {
+  const addNewNote = useCallback(() => {
     setIsNoteTextAreaVisible(true);
-  }
+  }, []);
 
-  function cancelNewNote() {
+  const cancelNewNote = useCallback(() => {
     setIsNoteTextAreaVisible(false);
-  }
+  }, []);
 
   return (
     <NotesContext.Provider
