@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { FormEvent, useState } from 'react';
 
 import { Button } from '@components/forms';
+import { InputTag } from '@components/forms/input-tag';
 import { useNotes } from '@contexts/notes-contexts';
 import { theme } from '@styles/theme';
 
@@ -53,11 +54,7 @@ export const NotesSection = () => {
           >
             <Header>
               <h2>Note 1</h2>
-              <input
-                aria-label="add a tag"
-                type="text"
-                placeholder="add a tag"
-              />
+              <InputTag />
             </Header>
             <Form onSubmit={handleSubmit}>
               <NotesTextArea
