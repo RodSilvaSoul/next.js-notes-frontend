@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  padding-top: 0.5rem;
   .inner-container {
     display: inline-block;
     position: relative;
@@ -62,7 +63,6 @@ export const TagContainer = styled.div<TagContainerProps>`
   flex-wrap: wrap;
   align-items: center;
 
-  padding-left: 0.2rem;
   margin-right: ${(props) => (props.shouldAddMarginRight ? '0.5rem' : '0.')};
   margin-bottom: 0.5rem;
 

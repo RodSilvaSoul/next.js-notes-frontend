@@ -2,6 +2,8 @@ import { AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { api } from 'services';
 import * as yup from 'yup';
 
 import { Button, InputInline, NoteTextArea } from '@components/forms';
@@ -22,13 +24,13 @@ import {
 } from './styles';
 
 type FormData = {
-  noteTitle: string;
+  title: string;
   note: string;
 };
 
 const formNoteSchema = yup.object().shape({
   note: yup.string().required('Your must type a note'),
-  noteTitle: yup.string().required('Your must type a note title'),
+  title: yup.string().required('Your must type a note title'),
 });
 
 export const NotesSection = () => {
@@ -44,7 +46,13 @@ export const NotesSection = () => {
   });
 
   const handleSentNote: SubmitHandler<FormData> = async (data) => {
-    console.log(data);
+    try {
+      await api.post('/notes', data);
+    } catch {
+      toast.error('Sorry, an error happened', {
+        closeOnClick: true,
+      });
+    }
   };
 
   return (
@@ -76,11 +84,11 @@ export const NotesSection = () => {
             <Form onSubmit={handleSubmit(handleSentNote)}>
               <Header>
                 <InputInline
-                  error={errors.noteTitle}
+                  error={errors.title}
                   className="note-title"
                   placeholder="Add a title"
                   autoComplete="off"
-                  {...register('noteTitle')}
+                  {...register('title')}
                 />
                 <InputTag />
               </Header>
