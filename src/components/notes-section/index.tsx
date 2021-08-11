@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { Button, InputInline } from '@components/forms';
+import { Button, InputInline, NoteTextArea } from '@components/forms';
 import { InputTag } from '@components/forms/input-tag';
 import { useNotes } from '@contexts/notes-contexts';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -15,7 +15,6 @@ import { motionVariants } from './config';
 import {
   Container,
   Header,
-  NotesTextArea,
   Form,
   InnerContainer,
   AddNewNote,
@@ -85,7 +84,8 @@ export const NotesSection = () => {
                 />
                 <InputTag />
               </Header>
-              <NotesTextArea
+              <NoteTextArea
+                error={errors.noteTitle}
                 aria-label="enter your note"
                 {...register('note')}
                 value={note}

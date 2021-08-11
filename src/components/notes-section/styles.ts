@@ -14,31 +14,6 @@ export const Header = styled.div`
   margin-bottom: 1.5rem;
 `;
 
-export const NotesTextArea = styled.textarea`
-  width: 100%;
-  height: 100%;
-  padding: 0.7rem;
-  border-radius: 0.3rem;
-  outline: none;
-  font-family: inherit;
-  font-size: 1rem;
-
-  border: 3px solid transparent;
-
-  transition: border-color 0.3s;
-
-  &:focus {
-    border-color: ${(props) => props.theme.pallet.black[700]};
-  }
-
-  resize: none;
-
-  &::placeholder {
-    text-align: center;
-    font-weight: bold;
-  }
-`;
-
 export const Form = styled.form`
   display: flex;
   flex-direction: column;

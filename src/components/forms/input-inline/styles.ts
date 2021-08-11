@@ -19,7 +19,7 @@ export const Container = styled.label<ContainerProps>`
 
     &:focus {
       border-color: ${(props) => (props.isAError
-    ? props.theme.pallet.red[500]
+    ? props.theme.pallet.red[400]
     : props.theme.pallet.black[600])};
     }
 
@@ -27,5 +27,9 @@ export const Container = styled.label<ContainerProps>`
       color: ${(props) => props.theme.pallet.black[200]};
       font-weight: bold;
     }
+  }
+
+  > p  {
+    margin-top: 0.5rem;
   }
 `;
