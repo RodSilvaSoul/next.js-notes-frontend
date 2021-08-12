@@ -2,10 +2,10 @@ import { RiAddFill } from 'react-icons/ri';
 import { useQuery } from 'react-query';
 import { api } from 'services';
 
-import { CardNote } from '@components/card-note';
 import { IconButton, SearchInput } from '@components/forms';
 import { useNotes } from '@contexts/notes-contexts';
 
+import { NotesWrapper } from './notes-wrapper';
 import { Container, Header } from './styles';
 
 type DataResult = {
@@ -15,7 +15,11 @@ type DataResult = {
   createdAt: string;
 };
 
-export const MiddleSidebar = () => {
+interface MiddleSidebarProps {
+  currentPage: string
+}
+
+export const MiddleSidebar = ({ currentPage }: MiddleSidebarProps) => {
   const { addNewNote } = useNotes();
 
   const { data, isLoading, isSuccess } = useQuery<DataResult[]>(
@@ -30,7 +34,7 @@ export const MiddleSidebar = () => {
     <Container>
       <Header>
         <div>
-          <h1>All notes</h1>
+          <h1>{currentPage}</h1>
           <IconButton onClick={addNewNote} aria-label="add a new note">
             <RiAddFill />
           </IconButton>
@@ -41,17 +45,7 @@ export const MiddleSidebar = () => {
         />
       </Header>
       {isLoading && <div>isLoading</div>}
-      {isSuccess && (
-        <NotesWrapper>
-          {data?.map((note) => (
-            <CardNote
-              key={note.id}
-              {...note}
-              currentNodeOnClick={currentNode}
-            />
-          ))}
-        </NotesWrapper>
-      )}
+      {isSuccess && <NotesWrapper data={data} />}
     </Container>
   );
 };

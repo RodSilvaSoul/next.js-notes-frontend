@@ -48,7 +48,7 @@ export const OptionsButton = styled.button`
   }
 `;
 
-export const Options = styled(motion.div)`
+export const Options = styled(motion.ul)`
   position: absolute;
   top: 45px;
   right: 10px;

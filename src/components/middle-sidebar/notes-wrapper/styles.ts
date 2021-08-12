@@ -8,5 +8,6 @@ export const Container = styled.div`
   > div + div {
     margin-top: 0.5rem;
   }
+  overflow-x: visible;
   overflow-y: auto;
 `;

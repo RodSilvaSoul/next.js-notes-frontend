@@ -12,7 +12,7 @@ type DataResult = {
 };
 
 interface NotesWrapperProps {
-  data: DataResult[];
+  data: DataResult[] | undefined;
 }
 
 export const NotesWrapper = ({ data }: NotesWrapperProps) => {
@@ -30,7 +30,7 @@ export const NotesWrapper = ({ data }: NotesWrapperProps) => {
 
   return (
     <Container>
-      {data.map((note) => (
+      {data?.map((note) => (
         <CardNote key={note.id} {...note} currentNodeOnClick={currentNode} />
       ))}
     </Container>
