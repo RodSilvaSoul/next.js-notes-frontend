@@ -14,7 +14,7 @@ export const Container = styled.button`
   padding: 0.2rem 1rem;
   font-size: 1rem;
   outline: none;
-  transition: background-color border 0.3s;
+  transition: all 0.3s;
 
   &:hover {
     background-color: ${(props) => darken(0.2, props.theme.pallet.black[500])};

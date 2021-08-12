@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  
   background-color: ${(props) => props.theme.pallet.black[600]};
   width: 25%;
   color: #ffff;
+
 `;
 
 export const Header = styled.div`
@@ -26,4 +30,16 @@ export const Header = styled.div`
     }
     
   }
+`;
+
+export const NotesWrapper = styled.div`
+  height: 100%;
+
+  padding:0 0.5rem;
+
+   > div + div  {
+     margin-top: 0.5rem;
+   }
+   overflow-y: auto;
+   
 `;

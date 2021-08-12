@@ -1,9 +1,9 @@
 import { AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { useRef } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
-import { api } from 'services';
+import { api, queryClient } from 'services';
 import * as yup from 'yup';
 
 import { Button, InputInline, NoteTextArea } from '@components/forms';
@@ -35,7 +35,6 @@ const formNoteSchema = yup.object().shape({
 
 export const NotesSection = () => {
   const { isNoteTextAreaVisible, cancelNewNote } = useNotes();
-  const formRef = useRef<HTMLFormElement>(null);
 
   const {
     register,
@@ -46,20 +45,29 @@ export const NotesSection = () => {
     resolver: yupResolver(formNoteSchema),
   });
 
-  const handleSentNote: SubmitHandler<FormData> = async (data) => {
-    try {
+  const { mutateAsync } = useMutation(
+    async (data: FormData) => {
       await api.post('/notes', data);
-      cancelNewNote();
-      toast.success('Saved successfully! ✅');
-      reset({
-        title: '',
-        note: '',
-      });
-    } catch {
-      toast.error('Sorry, an error happened', {
-        closeOnClick: true,
-      });
-    }
+    }, {
+      onError: () => {
+        toast.error('Sorry, an error happened', {
+          closeOnClick: true,
+        });
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries('notes');
+        cancelNewNote();
+        toast.success('Saved successfully! ✅');
+        reset({
+          title: '',
+          note: '',
+        });
+      },
+    },
+  );
+
+  const handleSentNote: SubmitHandler<FormData> = async (data) => {
+    await mutateAsync(data);
   };
 
   return (
@@ -88,7 +96,7 @@ export const NotesSection = () => {
             animate="show"
             exit="exit"
           >
-            <Form onSubmit={handleSubmit(handleSentNote)} ref={formRef}>
+            <Form onSubmit={handleSubmit(handleSentNote)}>
               <Header>
                 <InputInline
                   error={errors.title}
