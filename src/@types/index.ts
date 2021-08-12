@@ -1,7 +1,7 @@
 export type Note = {
   id: number;
   title: string;
-  notes: string;
+  note: string;
   createdAt: Date;
   isOnTrash: boolean;
   isArchived: boolean;

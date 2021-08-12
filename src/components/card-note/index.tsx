@@ -4,13 +4,12 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import { MdModeEdit } from 'react-icons/md';
 import { RiDeleteBin6Fill, RiInboxUnarchiveFill } from 'react-icons/ri';
 
+import { Note } from '@types';
+
 import { motionMenuVariants } from './config';
 import { Container, OptionsButton, Options } from './styles';
 
-interface CardNoteProps {
-  title: string;
-  note: string;
-  createdAt: string;
+interface CardNoteProps extends Note{
   currentNodeOnClick: Node | null;
 }
 
@@ -21,7 +20,7 @@ export const CardNote = ({
   currentNodeOnClick,
 }: CardNoteProps) => {
   const [isMenuOptionsHidden, setIsMenuOptionsHidden] = useState(false);
-  const optionsRef = useRef<HTMLDivElement>(null);
+  const optionsRef = useRef<HTMLUListElement>(null);
 
   function handleOptionsButton() {
     setIsMenuOptionsHidden(!isMenuOptionsHidden);

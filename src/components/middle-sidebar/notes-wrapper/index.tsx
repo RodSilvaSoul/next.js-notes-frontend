@@ -1,18 +1,12 @@
 import { useState, useEffect } from 'react';
 
 import { CardNote } from '@components/card-note';
+import { Note } from '@types';
 
 import { Container } from './styles';
 
-type DataResult = {
-  id: number;
-  title: string;
-  note: string;
-  createdAt: string;
-};
-
 interface NotesWrapperProps {
-  data: DataResult[] | undefined;
+  data: Note[] | undefined;
 }
 
 export const NotesWrapper = ({ data }: NotesWrapperProps) => {
