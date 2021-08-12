@@ -16,7 +16,7 @@ export const Sidebar = () => (
     </Head>
     <Body>
       <SidebarButton>
-        <Link href="/all-notes" passHref>
+        <Link href="/" passHref>
           <a>
             All notes
             <span>1</span>

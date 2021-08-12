@@ -23,6 +23,7 @@ export const childrenVariants: Variants = {
 };
 
 export const childrenTransition:Transition = {
-  yoyo: Infinity,
+  repeat: Infinity,
+  repeatType: 'mirror',
   duration: 0.5,
 };

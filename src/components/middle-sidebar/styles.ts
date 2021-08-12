@@ -44,3 +44,19 @@ export const LoadingWrapper = styled.div`
     font-weight: 500;
   }
 `;
+
+export const ErrorWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  height: 100%;
+
+  > p {
+    margin-top: 0.5rem;
+    font-weight: 500;
+    font-size: 1.4rem;
+  }
+`;

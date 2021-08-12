@@ -11,7 +11,7 @@ export default function Trash() {
       </Head>
       <Container>
         <Sidebar />
-        <MiddleSidebar currentPage="Trash" />
+        <MiddleSidebar currentPage="Archived" />
         <NotesSection />
       </Container>
     </>
