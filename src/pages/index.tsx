@@ -11,7 +11,7 @@ export default function Home() {
       </Head>
       <Container>
         <Sidebar />
-        <MiddleSidebar currentPage="All notes" />
+        <MiddleSidebar currentPage="Notes" />
         <NotesSection />
       </Container>
     </>

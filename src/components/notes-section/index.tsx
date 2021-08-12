@@ -8,7 +8,7 @@ import * as yup from 'yup';
 
 import { Button, InputInline, NoteTextArea } from '@components/forms';
 import { InputTag } from '@components/forms/input-tag';
-import { useNotes } from '@contexts/notes-contexts';
+import { useUseCase } from '@contexts/application-useCases';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { theme } from '@styles/theme';
 
@@ -34,7 +34,7 @@ const formNoteSchema = yup.object().shape({
 });
 
 export const NotesSection = () => {
-  const { isNoteTextAreaVisible, cancelNewNote } = useNotes();
+  const { isNoteTextAreaVisible, cancelNewNote } = useUseCase();
 
   const {
     register,

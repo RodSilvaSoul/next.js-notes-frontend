@@ -87,4 +87,4 @@ export const ApplicationDataProvider = ({ children }: ApplicationDataProps) => {
   );
 };
 
-export const useApplicationData = () => useContext(ApplicationDataContext);
+export const useData = () => useContext(ApplicationDataContext);

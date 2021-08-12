@@ -4,7 +4,7 @@ import {
 import { HiOutlineHashtag } from 'react-icons/hi';
 import { IoIosClose } from 'react-icons/io';
 
-import { useNotes } from '@contexts/notes-contexts';
+import { useData } from '@contexts/application-data';
 
 import {
   Container, CreateNewTagDialog, TagContainer, Input,
@@ -16,7 +16,7 @@ type TagData = {
 };
 
 export const InputTag = () => {
-  const { loadTags } = useNotes();
+  const { loadTags } = useData();
   const [tags, setTags] = useState<TagData[]>([]);
   const [tagValue, setTagValue] = useState('');
   const [tagCount, setTagCount] = useState(0);

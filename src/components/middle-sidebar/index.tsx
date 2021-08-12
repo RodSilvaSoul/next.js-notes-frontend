@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { RiAddFill } from 'react-icons/ri';
 
 import { IconButton, SearchInput } from '@components/forms';
 import { ThreeBallLoading } from '@components/progress';
-import { useNotes } from '@contexts/notes-contexts';
+import { useData } from '@contexts/application-data';
+import { useUseCase } from '@contexts/application-useCases';
 
 import ErrorImage from '../../../public/error.png';
 import { NotesWrapper } from './notes-wrapper';
@@ -13,16 +13,27 @@ import {
 } from './styles';
 
 interface MiddleSidebarProps {
-  currentPage: string;
+  currentPage: 'Trash' | 'Archived' | 'Notes'
 }
 
 export const MiddleSidebar = ({ currentPage }: MiddleSidebarProps) => {
   const {
-    addNewNote, isError, isSuccess, isLoading,
-  } = useNotes();
+    isError,
+    isSuccess,
+    isLoading,
+    archivedNotes,
+    trashNotes,
+    notes,
+  } = useData();
 
-  const { asPath, basePath, pathname } = useRouter();
-  console.log(asPath, basePath, pathname);
+  const { addNewNote } = useUseCase();
+
+  const data = {
+    Notes: notes,
+    Trash: trashNotes,
+    Archived: archivedNotes,
+  };
+
   return (
     <Container>
       <Header>
@@ -53,6 +64,9 @@ export const MiddleSidebar = ({ currentPage }: MiddleSidebarProps) => {
           />
           <p>Error loading notes</p>
         </ErrorWrapper>
+      )}
+      {isSuccess && (
+        <NotesWrapper data={data[currentPage]} />
       )}
     </Container>
   );

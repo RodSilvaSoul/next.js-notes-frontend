@@ -44,4 +44,4 @@ export const ApplicationUseCaseProvider = ({
   );
 };
 
-export const useApplicationUseCase = () => useContext(ApplicationUseCaseContext);
+export const useUseCase = () => useContext(ApplicationUseCaseContext);
