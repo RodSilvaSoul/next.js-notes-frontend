@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
 
@@ -11,10 +12,13 @@ import 'react-toastify/dist/ReactToastify.css';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
-      <NotesProvider>
-        <Component {...pageProps} />
-        <ToastContainer />
-      </NotesProvider>
+      <QueryClientProvider client={new QueryClient()}>
+        <NotesProvider>
+          <Component {...pageProps} />
+          <ToastContainer />
+        </NotesProvider>
+      </QueryClientProvider>
+
       <GlobalStyles />
     </ThemeProvider>
   );
