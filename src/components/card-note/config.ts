@@ -12,7 +12,9 @@ export const motionMenuVariants:Variants = {
   },
   exit: {
     opacity: 0,
-    scale: 0.5,
     visibility: 'hidden',
+    transition: {
+      duration: 0.1,
+    },
   },
 };

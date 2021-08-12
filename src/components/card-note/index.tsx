@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { MdModeEdit } from 'react-icons/md';
 import { RiDeleteBin6Fill, RiInboxUnarchiveFill } from 'react-icons/ri';
@@ -11,14 +11,27 @@ interface CardNoteProps {
   title: string;
   note: string;
   createdAt: string;
+  currentNodeOnClick: Node | null;
 }
 
-export const CardNote = ({ createdAt, note, title }: CardNoteProps) => {
+export const CardNote = ({
+  createdAt,
+  note,
+  title,
+  currentNodeOnClick,
+}: CardNoteProps) => {
   const [isMenuOptionsHidden, setIsMenuOptionsHidden] = useState(false);
+  const optionsRef = useRef<HTMLDivElement>(null);
 
   function handleOptionsButton() {
     setIsMenuOptionsHidden(!isMenuOptionsHidden);
   }
+
+  useEffect(() => {
+    if (!optionsRef.current?.contains(currentNodeOnClick)) {
+      setIsMenuOptionsHidden(false);
+    }
+  }, [currentNodeOnClick]);
 
   return (
     <Container>
@@ -39,6 +52,7 @@ export const CardNote = ({ createdAt, note, title }: CardNoteProps) => {
             initial="enter"
             animate="show"
             exit="exit"
+            ref={optionsRef}
           >
             <li>
               <button type="button">

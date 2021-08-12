@@ -41,6 +41,7 @@ export const CreateNewTagDialog = styled.div<CreateNewTagDialogProps>`
     font-size: 0.9rem;
     font-weight: 500;
     white-space: nowrap;
+
     color: ${(props) => props.theme.pallet.black[500]};
 
     > span {
@@ -49,6 +50,10 @@ export const CreateNewTagDialog = styled.div<CreateNewTagDialogProps>`
 
       border-radius: 0.3rem;
       margin-left: 0.3rem;
+
+      max-width: 12rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 `;
@@ -143,13 +148,5 @@ export const Input = styled.input`
   &::placeholder {
     color: ${(props) => props.theme.pallet.black[200]};
     font-weight: 500;
-  }
-`;
-
-export const ViewAllTagsWrapper = styled.div`
-  padding-left: 0.3rem;
-  > p {
-    font-weight: 600;
-    font-size: 1.1rem;
   }
 `;

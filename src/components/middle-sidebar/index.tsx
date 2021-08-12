@@ -6,7 +6,7 @@ import { CardNote } from '@components/card-note';
 import { IconButton, SearchInput } from '@components/forms';
 import { useNotes } from '@contexts/notes-contexts';
 
-import { Container, Header, NotesWrapper } from './styles';
+import { Container, Header } from './styles';
 
 type DataResult = {
   id: number;
@@ -17,6 +17,7 @@ type DataResult = {
 
 export const MiddleSidebar = () => {
   const { addNewNote } = useNotes();
+
   const { data, isLoading, isSuccess } = useQuery<DataResult[]>(
     'notes',
     async () => {
@@ -43,7 +44,11 @@ export const MiddleSidebar = () => {
       {isSuccess && (
         <NotesWrapper>
           {data?.map((note) => (
-            <CardNote key={note.id} {...note} />
+            <CardNote
+              key={note.id}
+              {...note}
+              currentNodeOnClick={currentNode}
+            />
           ))}
         </NotesWrapper>
       )}

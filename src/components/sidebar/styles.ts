@@ -17,7 +17,7 @@ export const Head = styled.div`
   padding-bottom: 2rem;
 `;
 
-export const Body = styled.div`
+export const Body = styled.nav`
   display: flex;
   flex-direction: column;
 
