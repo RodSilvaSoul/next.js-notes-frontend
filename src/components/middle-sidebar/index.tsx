@@ -3,10 +3,11 @@ import { useQuery } from 'react-query';
 import { api } from 'services';
 
 import { IconButton, SearchInput } from '@components/forms';
+import { ThreeBallLoading } from '@components/progress';
 import { useNotes } from '@contexts/notes-contexts';
 
 import { NotesWrapper } from './notes-wrapper';
-import { Container, Header } from './styles';
+import { Container, Header, LoadingWrapper } from './styles';
 
 type DataResult = {
   id: number;
@@ -16,7 +17,7 @@ type DataResult = {
 };
 
 interface MiddleSidebarProps {
-  currentPage: string
+  currentPage: string;
 }
 
 export const MiddleSidebar = ({ currentPage }: MiddleSidebarProps) => {
@@ -44,8 +45,15 @@ export const MiddleSidebar = ({ currentPage }: MiddleSidebarProps) => {
           placeholder="Search for notes"
         />
       </Header>
-      {isLoading && <div>isLoading</div>}
-      {isSuccess && <NotesWrapper data={data} />}
+      {isLoading && (
+        <LoadingWrapper>
+          <ThreeBallLoading />
+          <p>Loading ...</p>
+        </LoadingWrapper>
+      )}
+      {isSuccess && (
+        <NotesWrapper data={data} />
+      )}
     </Container>
   );
 };
