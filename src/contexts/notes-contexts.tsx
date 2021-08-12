@@ -1,10 +1,17 @@
+/* eslint-disable no-unused-vars */
 import {
-  createContext, useState, ReactNode, useContext, useCallback,
+  createContext,
+  useState,
+  ReactNode,
+  useContext,
+  useCallback,
 } from 'react';
 
 interface NotesContextData {
   addNewNote: () => void;
   cancelNewNote: () => void;
+  loadTags: (tagsData: string[]) => void;
+  tags: string[];
   isNoteTextAreaVisible: boolean;
 }
 
@@ -16,6 +23,7 @@ interface NotesProviderProps {
 
 export const NotesProvider = ({ children }: NotesProviderProps) => {
   const [isNoteTextAreaVisible, setIsNoteTextAreaVisible] = useState(false);
+  const [tags, setTags] = useState<string[]>([]);
 
   const addNewNote = useCallback(() => {
     setIsNoteTextAreaVisible(true);
@@ -25,9 +33,15 @@ export const NotesProvider = ({ children }: NotesProviderProps) => {
     setIsNoteTextAreaVisible(false);
   }, []);
 
+  const loadTags = useCallback((tagsData: string[]) => {
+    setTags(tagsData);
+  }, []);
+
   return (
     <NotesContext.Provider
       value={{
+        loadTags,
+        tags,
         addNewNote,
         cancelNewNote,
         isNoteTextAreaVisible,

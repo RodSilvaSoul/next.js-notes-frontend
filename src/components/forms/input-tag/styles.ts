@@ -5,7 +5,6 @@ export const Container = styled.div`
   .inner-container {
     display: inline-block;
     position: relative;
-    margin-left: 0.3rem;
     margin-top: 0.2rem;
   }
 `;

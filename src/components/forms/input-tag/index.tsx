@@ -1,6 +1,10 @@
-import { useState, KeyboardEvent, useCallback } from 'react';
+import {
+  useState, KeyboardEvent, useCallback, useEffect,
+} from 'react';
 import { HiOutlineHashtag } from 'react-icons/hi';
 import { IoIosClose } from 'react-icons/io';
+
+import { useNotes } from '@contexts/notes-contexts';
 
 import {
   Container, CreateNewTagDialog, TagContainer, Input,
@@ -12,6 +16,7 @@ type TagData = {
 };
 
 export const InputTag = () => {
+  const { loadTags } = useNotes();
   const [tags, setTags] = useState<TagData[]>([]);
   const [tagValue, setTagValue] = useState('');
   const [tagCount, setTagCount] = useState(0);
@@ -20,6 +25,11 @@ export const InputTag = () => {
     const tagsFiltered = tags.filter((tag) => tag.index !== index);
     setTags(tagsFiltered);
   }
+
+  useEffect(() => {
+    const tagData = tags.map((data) => data.value);
+    loadTags(tagData);
+  }, [tags, loadTags]);
 
   function Tag({ value, index }: TagData) {
     return (

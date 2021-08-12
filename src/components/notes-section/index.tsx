@@ -1,6 +1,6 @@
 import { AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRef } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { api } from 'services';
@@ -35,12 +35,13 @@ const formNoteSchema = yup.object().shape({
 
 export const NotesSection = () => {
   const { isNoteTextAreaVisible, cancelNewNote } = useNotes();
-  const [note, setNote] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(formNoteSchema),
   });
@@ -48,6 +49,12 @@ export const NotesSection = () => {
   const handleSentNote: SubmitHandler<FormData> = async (data) => {
     try {
       await api.post('/notes', data);
+      cancelNewNote();
+      toast.success('Saved successfully! ✅');
+      reset({
+        title: '',
+        note: '',
+      });
     } catch {
       toast.error('Sorry, an error happened', {
         closeOnClick: true,
@@ -81,7 +88,7 @@ export const NotesSection = () => {
             animate="show"
             exit="exit"
           >
-            <Form onSubmit={handleSubmit(handleSentNote)}>
+            <Form onSubmit={handleSubmit(handleSentNote)} ref={formRef}>
               <Header>
                 <InputInline
                   error={errors.title}
@@ -96,8 +103,6 @@ export const NotesSection = () => {
                 error={errors.noteTitle}
                 aria-label="enter your note"
                 {...register('note')}
-                value={note}
-                onChange={(event) => setNote(event.target.value)}
               />
               <ButtonGroup>
                 <Button
