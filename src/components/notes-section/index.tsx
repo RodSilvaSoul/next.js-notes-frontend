@@ -1,5 +1,6 @@
 import { AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
@@ -34,7 +35,14 @@ const formNoteSchema = yup.object().shape({
 });
 
 export const NotesSection = () => {
-  const { isNoteTextAreaVisible, cancelNewNote } = useUseCase();
+  const {
+    isNoteTextAreaVisible,
+    cancelNewNote,
+    editData,
+    addNewNote,
+    editNote,
+    updateNote,
+  } = useUseCase();
 
   const {
     register,
@@ -45,10 +53,22 @@ export const NotesSection = () => {
     resolver: yupResolver(formNoteSchema),
   });
 
+  useEffect(() => {
+    reset({
+      title: editData.title,
+      note: editData.note,
+    });
+
+    if (editData.isInView) {
+      addNewNote();
+    }
+  }, [editData, reset, addNewNote]);
+
   const { mutateAsync } = useMutation(
     async (data: FormData) => {
       await api.post('/notes', data);
-    }, {
+    },
+    {
       onError: () => {
         toast.error('Sorry, an error happened', {
           closeOnClick: true,
@@ -66,7 +86,22 @@ export const NotesSection = () => {
     },
   );
 
+  function handleCancelButton() {
+    editNote({
+      id: 0,
+      isInView: false,
+      note: '',
+      title: '',
+    });
+    cancelNewNote();
+  }
+
   const handleSentNote: SubmitHandler<FormData> = async (data) => {
+    if (editData.isInView) {
+      await updateNote(editData.id, data);
+      return;
+    }
+
     await mutateAsync(data);
   };
 
@@ -113,6 +148,16 @@ export const NotesSection = () => {
                 {...register('note')}
               />
               <ButtonGroup>
+                {editData.isInView && (
+                  <Button
+                    backgroundColor={theme.pallet.blue[400]}
+                    type="submit"
+                    aria-label="edit notes button"
+                  >
+                    update
+                  </Button>
+                )}
+                {!editData.isInView && (
                 <Button
                   backgroundColor={theme.pallet.green[500]}
                   type="submit"
@@ -120,11 +165,12 @@ export const NotesSection = () => {
                 >
                   Save
                 </Button>
+                )}
                 <Button
                   backgroundColor={theme.pallet.red[500]}
                   type="button"
                   aria-label="cancel notes button"
-                  onClick={cancelNewNote}
+                  onClick={handleCancelButton}
                 >
                   Cancel
                 </Button>

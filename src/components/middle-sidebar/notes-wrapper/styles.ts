@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  height: 100%;
+  display: flex;
+  flex-direction: column;
 
-  padding: 0 0.5rem;
+  height: 100%;
+  padding: 0.5rem 0.5rem 3rem;
+  overflow-y: auto;
 
   > div + div {
     margin-top: 0.5rem;
   }
-  overflow-x: visible;
-  overflow-y: auto;
 `;

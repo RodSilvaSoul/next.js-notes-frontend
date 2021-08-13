@@ -1,4 +1,6 @@
 /* eslint-disable no-unused-vars */
+
+import { Omit } from 'framer-motion/types/types';
 import { useUpdatedNoteState } from 'hooks';
 import {
   useContext,
@@ -10,11 +12,28 @@ import {
 
 import { useData } from './application-data';
 
+type Actions = 'archive' | 'trash' | 'note' | 'delete';
+
+type EditNoteData = {
+  id: number;
+  title: string;
+  note: string,
+  isInView: boolean;
+}
+
+type UpdateNoteData = {
+  title?: string;
+  note?: string;
+}
+
 interface ApplicationUseCase {
   addNewNote: () => void;
   cancelNewNote: () => void;
-  manageNote: (id: number, actionType: 'archive' | 'trash' | 'note') => void;
+  editNote: (data: EditNoteData) => void;
+  manageNote: (id: number, actionType: Actions) => Promise<void>;
+  updateNote: (id: number, data: UpdateNoteData) => Promise<void>;
   isNoteTextAreaVisible: boolean;
+  editData: EditNoteData;
 }
 
 const ApplicationUseCaseContext = createContext<ApplicationUseCase>({} as any);
@@ -27,9 +46,14 @@ export const ApplicationUseCaseProvider = ({
   children,
 }: ApplicationUseCaseProviderProps) => {
   const [isNoteTextAreaVisible, setIsNoteTextAreaVisible] = useState(false);
-
-  const { notes } = useData();
-  const { mutateAsync } = useUpdatedNoteState();
+  const { notes, trashNotes, archivedNotes } = useData();
+  const { deleteMutation, updateMutation } = useUpdatedNoteState();
+  const [editData, setEditNote] = useState<EditNoteData>({
+    id: 0,
+    note: '',
+    title: '',
+    isInView: false,
+  });
 
   const addNewNote = useCallback(() => {
     setIsNoteTextAreaVisible(true);
@@ -39,44 +63,74 @@ export const ApplicationUseCaseProvider = ({
     setIsNoteTextAreaVisible(false);
   }, []);
 
+  const editNote = useCallback((data: EditNoteData) => {
+    setEditNote(data);
+  }, []);
+
   const manageNote = useCallback(
-    async (id: number, actionType: 'archive' | 'trash' | 'note') => {
+    async (id: number, actionType: Actions) => {
       const actions = {
         archive: async () => {
-          const noteData = notes?.find((note) => note.id === id);
+          const data = [...notes, ...trashNotes];
+
+          const noteData = data.find((note) => note.id === id);
+
           if (noteData) {
             noteData.isOnTrash = false;
             noteData.isArchived = true;
-            await mutateAsync(noteData);
+            await updateMutation.mutateAsync(noteData);
           }
         },
         trash: async () => {
-          const noteData = notes?.find((note) => note.id === id);
+          const data = [...notes, ...archivedNotes];
+
+          const noteData = data.find((note) => note.id === id);
+
           if (noteData) {
             noteData.isArchived = false;
             noteData.isOnTrash = true;
-            await mutateAsync(noteData);
+            await updateMutation.mutateAsync(noteData);
           }
         },
         note: async () => {
-          const noteData = notes?.find((note) => note.id === id);
+          const data = [...notes, ...archivedNotes, ...trashNotes];
+
+          const noteData = data.find((note) => note.id === id);
+
           if (noteData) {
             noteData.isArchived = false;
             noteData.isOnTrash = false;
-            await mutateAsync(noteData);
+            await updateMutation.mutateAsync(noteData);
           }
+        },
+        delete: async () => {
+          await deleteMutation.mutateAsync(id);
         },
       };
 
       const action = actions[actionType];
       await action();
     },
-    [mutateAsync, notes],
+    [updateMutation, notes, trashNotes, archivedNotes, deleteMutation],
   );
+
+  const updateNote = useCallback(async (id: number, data: UpdateNoteData) => {
+    const allData = [...archivedNotes, ...notes, ...trashNotes];
+    const noteData = allData.find((note) => note.id === id);
+    if (noteData) {
+      await updateMutation.mutateAsync({
+        ...noteData,
+        ...data,
+      });
+    }
+  }, [archivedNotes, notes, trashNotes, updateMutation]);
 
   return (
     <ApplicationUseCaseContext.Provider
       value={{
+        updateNote,
+        editData,
+        editNote,
         manageNote,
         addNewNote,
         cancelNewNote,

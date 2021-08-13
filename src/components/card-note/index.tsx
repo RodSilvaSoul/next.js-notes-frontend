@@ -1,14 +1,21 @@
 import { AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
-import { MdModeEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill, RiInboxUnarchiveFill } from 'react-icons/ri';
+import { MdModeEdit, MdClear } from 'react-icons/md';
+import {
+  RiDeleteBin6Fill,
+  RiInboxUnarchiveFill,
+  RiInboxArchiveFill,
+} from 'react-icons/ri';
 
 import { useUseCase } from '@contexts/application-useCases';
+import { theme } from '@styles/theme';
 import { Note } from '@types';
 
 import { motionMenuVariants } from './config';
-import { Container, OptionsButton, Options } from './styles';
+import {
+  Container, OptionsButton, Options, Badge,
+} from './styles';
 
 interface CardNoteProps extends Note {
   currentNodeOnClick: Node | null;
@@ -19,10 +26,12 @@ export const CardNote = ({
   note,
   title,
   id,
+  isArchived,
+  isOnTrash,
   currentNodeOnClick,
 }: CardNoteProps) => {
   const [isMenuOptionsHidden, setIsMenuOptionsHidden] = useState(false);
-  const { manageNote } = useUseCase();
+  const { manageNote, editNote } = useUseCase();
   const optionsRef = useRef<HTMLUListElement>(null);
 
   function handleOptionsButton() {
@@ -37,6 +46,12 @@ export const CardNote = ({
 
   return (
     <Container>
+      {isArchived && (
+        <Badge colorBackground={theme.pallet.green[500]}>Archived</Badge>
+      )}
+      {isOnTrash && (
+        <Badge colorBackground={theme.pallet.blue[400]}>Trash</Badge>
+      )}
       <h2>{title}</h2>
       <h3>{note}</h3>
       <small>{createdAt}</small>
@@ -63,17 +78,43 @@ export const CardNote = ({
               </button>
             </li>
             <li>
-              <button type="button">
+              <button
+                type="button"
+                onClick={() => editNote({
+                  id,
+                  note,
+                  title,
+                  isInView: true,
+                })}
+              >
                 Edit
                 <MdModeEdit />
               </button>
             </li>
-            <li>
-              <button type="button" onClick={() => manageNote(id, 'archive')}>
-                Archive
-                <RiInboxUnarchiveFill />
-              </button>
-            </li>
+            {!isArchived && (
+              <li>
+                <button type="button" onClick={() => manageNote(id, 'archive')}>
+                  Archive
+                  <RiInboxArchiveFill />
+                </button>
+              </li>
+            )}
+            {isArchived && (
+              <li>
+                <button type="button" onClick={() => manageNote(id, 'note')}>
+                  unarchive
+                  <RiInboxUnarchiveFill />
+                </button>
+              </li>
+            )}
+            {isOnTrash && (
+              <li>
+                <button type="button" onClick={() => manageNote(id, 'delete')}>
+                  Delete permanently
+                  <MdClear />
+                </button>
+              </li>
+            )}
           </Options>
         )}
       </AnimatePresence>

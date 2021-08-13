@@ -4,7 +4,7 @@ import { api, queryClient } from 'services';
 import { Note } from '@types';
 
 export const useUpdatedNoteState = () => {
-  const { mutateAsync } = useMutation(
+  const updateMutation = useMutation(
     async (data: Note) => {
       await api.put(`/notes/${data.id}`, data);
     },
@@ -12,12 +12,44 @@ export const useUpdatedNoteState = () => {
       onMutate: async (data) => {
         await queryClient.cancelQueries('notes');
 
-        const previousData = await queryClient.getQueryData('notes');
+        const previousData = await queryClient.getQueryData('notes') as Note[];
 
-        await queryClient.setQueryData('notes', (old) => [
-          ...(old as any),
-          data,
-        ]);
+        const index = previousData.indexOf(data);
+
+        if (index > -1) {
+          const newData = previousData;
+
+          newData[index] = data;
+
+          queryClient.setQueryData('notes', newData);
+        }
+
+        return previousData;
+      },
+      onError: async (err, data, context) => {
+        await queryClient.setQueryData('note', context);
+      },
+      onSettled: async () => {
+        await queryClient.invalidateQueries('notes');
+      },
+    },
+  );
+
+  const deleteMutation = useMutation(
+    async (id: number) => {
+      await api.delete(`/notes/${id}`);
+    },
+    {
+      onMutate: async (id) => {
+        await queryClient.cancelQueries('notes');
+
+        const previousData = (await queryClient.getQueryData(
+          'notes',
+        )) as Note[];
+
+        const newData = previousData?.filter((note) => note.id !== id);
+
+        queryClient.setQueryData('notes', newData);
 
         return previousData;
       },
@@ -31,6 +63,7 @@ export const useUpdatedNoteState = () => {
   );
 
   return {
-    mutateAsync,
+    deleteMutation,
+    updateMutation,
   };
 };

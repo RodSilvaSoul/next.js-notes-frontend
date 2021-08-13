@@ -2,6 +2,9 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+
   position: relative;
 
   width: 100%;
@@ -9,17 +12,23 @@ export const Container = styled.div`
   background-color: ${(props) => props.theme.pallet.black[200]};
   border: 0;
   border-radius: 0.3rem;
+  font-family: inherit;
+  color: inherit;
 
+  cursor: pointer;
+ 
   > h2 {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
+    margin: 0.2rem 0;
   }
 
   > h3 {
+    display: inline-block;
     color: ${(props) => props.theme.pallet.black[300]};
     font-size: 1rem;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 100%;
   }
 `;
 
@@ -50,13 +59,12 @@ export const OptionsButton = styled.button`
 
 export const Options = styled(motion.ul)`
   position: absolute;
-  top: 45px;
-  right: 10px;
+  top: 10px;
+  right: 40px;
   list-style: none;
   border: 0;
   border-radius: 0.3rem;
-
-  z-index: 2;
+  z-index: 4;
 
   background-color: #fff;
   color: ${(props) => props.theme.pallet.black[400]};
@@ -97,4 +105,17 @@ export const Options = styled(motion.ul)`
   > li + li {
     border-top: 1px solid ${(props) => props.theme.pallet.black[200]};
   }
+`;
+
+interface BadgeProps {
+  colorBackground: string
+}
+
+export const Badge = styled.span<BadgeProps>`
+  border-radius: 0.3rem;
+  padding: 0.2rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background-color: ${(props) => props.colorBackground};
+  width: fit-content;
 `;

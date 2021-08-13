@@ -7,6 +7,8 @@ export const Container = styled.div`
   background-color: ${(props) => props.theme.pallet.black[600]};
   width: 25%;
   color: #ffff;
+
+  max-height: 100vh;
 `;
 
 export const Header = styled.div`

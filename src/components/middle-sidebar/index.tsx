@@ -26,7 +26,7 @@ export const MiddleSidebar = ({ currentPage }: MiddleSidebarProps) => {
     notes,
   } = useData();
 
-  const { addNewNote } = useUseCase();
+  const { addNewNote, editNote } = useUseCase();
 
   const data = {
     Notes: notes,
@@ -34,12 +34,22 @@ export const MiddleSidebar = ({ currentPage }: MiddleSidebarProps) => {
     Archived: archivedNotes,
   };
 
+  function handleAddButton () {
+    editNote({
+      id: 0,
+      isInView: false,
+      note: '',
+      title: '',
+    });
+    addNewNote();
+  }
+
   return (
     <Container>
       <Header>
         <div>
           <h1>{currentPage}</h1>
-          <IconButton onClick={addNewNote} aria-label="add a new note">
+          <IconButton onClick={handleAddButton} aria-label="add a new note">
             <RiAddFill />
           </IconButton>
         </div>
@@ -65,9 +75,7 @@ export const MiddleSidebar = ({ currentPage }: MiddleSidebarProps) => {
           <p>Error loading notes</p>
         </ErrorWrapper>
       )}
-      {isSuccess && (
-        <NotesWrapper data={data[currentPage]} />
-      )}
+      {isSuccess && <NotesWrapper data={data[currentPage]} />}
     </Container>
   );
 };

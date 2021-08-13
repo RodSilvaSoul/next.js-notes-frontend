@@ -15,9 +15,9 @@ import { Note } from '@types';
 interface ApplicationDataContextData {
   loadTags: (tagsData: string[]) => void;
   tags: string[];
-  notes: Note[] | undefined;
-  trashNotes: Note[] | undefined;
-  archivedNotes: Note[] | undefined;
+  notes: Note[];
+  trashNotes: Note[];
+  archivedNotes: Note[];
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
@@ -44,25 +44,36 @@ export const ApplicationDataProvider = ({ children }: ApplicationDataProps) => {
     },
   );
 
-  const notes = useMemo(
-    () => data?.filter((noteDate) => {
-      if (!noteDate.isArchived && !noteDate.isOnTrash) {
+  const notes = useMemo(() => {
+    const noteData = data?.filter((note) => {
+      if (!note.isOnTrash && !note.isArchived) {
         return true;
       }
       return false;
-    }),
-    [data],
-  );
+    });
 
-  const trashNotes = useMemo(
-    () => data?.filter((noteDate) => noteDate.isOnTrash),
-    [data],
-  );
+    if (noteData) {
+      return noteData;
+    }
 
-  const archivedNotes = useMemo(
-    () => data?.filter((noteDate) => noteDate.isArchived),
-    [data],
-  );
+    return [];
+  }, [data]);
+
+  const trashNotes = useMemo(() => {
+    const noteData = data?.filter((noteDate) => noteDate.isOnTrash);
+    if (noteData) {
+      return noteData;
+    }
+    return [];
+  }, [data]);
+
+  const archivedNotes = useMemo(() => {
+    const noteData = data?.filter((noteDate) => noteDate.isArchived);
+    if (noteData) {
+      return noteData;
+    }
+    return [];
+  }, [data]);
 
   const loadTags = useCallback((tagsData: string[]) => {
     setTags(tagsData);
