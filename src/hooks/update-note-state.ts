@@ -1,4 +1,5 @@
 import { useMutation } from 'react-query';
+import { toast } from 'react-toastify';
 import { api, queryClient } from 'services';
 
 import { Note } from '@types';
@@ -12,9 +13,13 @@ export const useUpdatedNoteState = () => {
       onMutate: async (data) => {
         await queryClient.cancelQueries('notes');
 
-        const previousData = await queryClient.getQueryData('notes') as Note[];
+        const previousData = (await queryClient.getQueryData(
+          'notes',
+        )) as Note[];
 
-        const index = previousData.findIndex((dataNote) => dataNote.id === data.id);
+        const index = previousData.findIndex(
+          (dataNote) => dataNote.id === data.id,
+        );
 
         if (index > -1) {
           const newData = previousData;
@@ -28,9 +33,13 @@ export const useUpdatedNoteState = () => {
       },
       onError: async (err, data, context) => {
         await queryClient.setQueryData('note', context);
+        toast.error('Sorry, a error happened');
       },
       onSettled: async () => {
         await queryClient.invalidateQueries('notes');
+      },
+      onSuccess: () => {
+        toast.success('Updated successfully');
       },
     },
   );
@@ -55,9 +64,13 @@ export const useUpdatedNoteState = () => {
       },
       onError: async (err, data, context) => {
         await queryClient.setQueryData('note', context);
+        toast.error('Sorry, a error happened');
       },
       onSettled: async () => {
         await queryClient.invalidateQueries('notes');
+      },
+      onSuccess: () => {
+        toast.success('Deleted successfully');
       },
     },
   );
