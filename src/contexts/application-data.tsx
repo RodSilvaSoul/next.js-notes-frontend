@@ -13,7 +13,6 @@ import { api } from 'services';
 import { Note } from '@types';
 
 interface ApplicationDataContextData {
-
   loadTags: (tagsData: string[]) => void;
   tags: string[];
   notes: Note[] | undefined;

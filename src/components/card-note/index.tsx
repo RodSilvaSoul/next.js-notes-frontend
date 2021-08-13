@@ -4,12 +4,13 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import { MdModeEdit } from 'react-icons/md';
 import { RiDeleteBin6Fill, RiInboxUnarchiveFill } from 'react-icons/ri';
 
+import { useUseCase } from '@contexts/application-useCases';
 import { Note } from '@types';
 
 import { motionMenuVariants } from './config';
 import { Container, OptionsButton, Options } from './styles';
 
-interface CardNoteProps extends Note{
+interface CardNoteProps extends Note {
   currentNodeOnClick: Node | null;
 }
 
@@ -17,9 +18,11 @@ export const CardNote = ({
   createdAt,
   note,
   title,
+  id,
   currentNodeOnClick,
 }: CardNoteProps) => {
   const [isMenuOptionsHidden, setIsMenuOptionsHidden] = useState(false);
+  const { manageNote } = useUseCase();
   const optionsRef = useRef<HTMLUListElement>(null);
 
   function handleOptionsButton() {
@@ -54,7 +57,7 @@ export const CardNote = ({
             ref={optionsRef}
           >
             <li>
-              <button type="button">
+              <button type="button" onClick={() => manageNote(id, 'trash')}>
                 Move to trash
                 <RiDeleteBin6Fill />
               </button>
@@ -66,7 +69,7 @@ export const CardNote = ({
               </button>
             </li>
             <li>
-              <button type="button">
+              <button type="button" onClick={() => manageNote(id, 'archive')}>
                 Archive
                 <RiInboxUnarchiveFill />
               </button>

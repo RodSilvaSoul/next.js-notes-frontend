@@ -3,17 +3,21 @@
     {
       "title": "rodrigo",
       "note": "rodrigo",
-      "id": 1
+      "id": 1,
+      "isArchived": true
     },
     {
       "title": "Fazer compras",
       "note": "fazer compras amanha\n",
-      "id": 2
+      "id": 2,
+      "isArchived": false,
+      "isOnTrash": true
     },
     {
       "title": "rodrigo",
       "note": "asdasdasçdkaçsdkdlaskçdkaçdkasdçlksdçlsakdçlaskdaçdsksadçlasdçalsdkaksdadladaksdasçdlaskdasçdladkasdçladkasçldsdkasçdlasadkasaçdlsdksçalsdkaçsldka",
-      "id": 3
+      "id": 3,
+      "isArchived": true
     }
   ],
   "tags": [],
