@@ -60,7 +60,7 @@ export const OptionsButton = styled.button`
 export const Options = styled(motion.ul)`
   position: absolute;
   top: 10px;
-  right: 40px;
+  right: 50px;
   list-style: none;
   border: 0;
   border-radius: 0.3rem;

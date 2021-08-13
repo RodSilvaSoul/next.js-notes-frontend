@@ -14,7 +14,7 @@ export const useUpdatedNoteState = () => {
 
         const previousData = await queryClient.getQueryData('notes') as Note[];
 
-        const index = previousData.indexOf(data);
+        const index = previousData.findIndex((dataNote) => dataNote.id === data.id);
 
         if (index > -1) {
           const newData = previousData;

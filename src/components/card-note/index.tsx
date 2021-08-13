@@ -1,7 +1,9 @@
 import { AnimatePresence } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import {
+  memo, useEffect, useRef, useState,
+} from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
-import { MdModeEdit, MdClear } from 'react-icons/md';
+import { MdModeEdit, MdClear, MdRestore } from 'react-icons/md';
 import {
   RiDeleteBin6Fill,
   RiInboxUnarchiveFill,
@@ -21,7 +23,7 @@ interface CardNoteProps extends Note {
   currentNodeOnClick: Node | null;
 }
 
-export const CardNote = ({
+export const CardNoteComponent = ({
   createdAt,
   note,
   title,
@@ -71,12 +73,14 @@ export const CardNote = ({
             exit="exit"
             ref={optionsRef}
           >
-            <li>
-              <button type="button" onClick={() => manageNote(id, 'trash')}>
-                Move to trash
-                <RiDeleteBin6Fill />
-              </button>
-            </li>
+            {!isOnTrash && (
+              <li>
+                <button type="button" onClick={() => manageNote(id, 'trash')}>
+                  Move to trash
+                  <RiDeleteBin6Fill />
+                </button>
+              </li>
+            )}
             <li>
               <button
                 type="button"
@@ -115,9 +119,19 @@ export const CardNote = ({
                 </button>
               </li>
             )}
+            {isOnTrash && (
+              <li>
+                <button type="button" onClick={() => manageNote(id, 'note')}>
+                  Restore
+                  <MdRestore />
+                </button>
+              </li>
+            )}
           </Options>
         )}
       </AnimatePresence>
     </Container>
   );
 };
+
+export const CardNote = memo(CardNoteComponent);

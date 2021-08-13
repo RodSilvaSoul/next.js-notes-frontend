@@ -1,6 +1,6 @@
 import { AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
@@ -34,7 +34,7 @@ const formNoteSchema = yup.object().shape({
   title: yup.string().required('Your must type a note title'),
 });
 
-export const NotesSection = () => {
+const NotesSectionComponent = () => {
   const {
     isNoteTextAreaVisible,
     cancelNewNote,
@@ -182,3 +182,5 @@ export const NotesSection = () => {
     </Container>
   );
 };
+
+export const NotesSection = memo(NotesSectionComponent);

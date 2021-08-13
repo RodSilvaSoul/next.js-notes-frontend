@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useMemo, useState } from 'react';
 import { RiAddFill } from 'react-icons/ri';
 
 import { IconButton, SearchInput } from '@components/forms';
@@ -17,6 +18,8 @@ interface MiddleSidebarProps {
 }
 
 export const MiddleSidebar = ({ currentPage }: MiddleSidebarProps) => {
+  const [searchValue, setSearchValue] = useState('');
+
   const {
     isError,
     isSuccess,
@@ -28,11 +31,24 @@ export const MiddleSidebar = ({ currentPage }: MiddleSidebarProps) => {
 
   const { addNewNote, editNote } = useUseCase();
 
-  const data = {
-    Notes: notes,
-    Trash: trashNotes,
-    Archived: archivedNotes,
-  };
+  const data = useMemo(() => {
+    const allData = {
+      Notes: notes,
+      Trash: trashNotes,
+      Archived: archivedNotes,
+    };
+
+    const result = allData[currentPage].filter((noteData) => {
+      if (searchValue) {
+        if (noteData.title.includes(searchValue)) {
+          return true;
+        }
+        return false;
+      }
+      return true;
+    });
+    return result;
+  }, [archivedNotes, currentPage, notes, searchValue, trashNotes]);
 
   function handleAddButton () {
     editNote({
@@ -56,6 +72,8 @@ export const MiddleSidebar = ({ currentPage }: MiddleSidebarProps) => {
         <SearchInput
           aria-label="Search for notes"
           placeholder="Search for notes"
+          value={searchValue}
+          onChange={(event) => setSearchValue(event.currentTarget.value)}
         />
       </Header>
       {isLoading && (
@@ -75,7 +93,7 @@ export const MiddleSidebar = ({ currentPage }: MiddleSidebarProps) => {
           <p>Error loading notes</p>
         </ErrorWrapper>
       )}
-      {isSuccess && <NotesWrapper data={data[currentPage]} />}
+      {isSuccess && <NotesWrapper data={data} />}
     </Container>
   );
 };

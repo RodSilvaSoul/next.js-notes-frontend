@@ -5,7 +5,6 @@ import {
   ReactNode,
   useContext,
   useCallback,
-  useMemo,
 } from 'react';
 import { useQuery } from 'react-query';
 import { api } from 'services';
@@ -44,7 +43,7 @@ export const ApplicationDataProvider = ({ children }: ApplicationDataProps) => {
     },
   );
 
-  const notes = useMemo(() => {
+  const notes = () => {
     const noteData = data?.filter((note) => {
       if (!note.isOnTrash && !note.isArchived) {
         return true;
@@ -57,23 +56,23 @@ export const ApplicationDataProvider = ({ children }: ApplicationDataProps) => {
     }
 
     return [];
-  }, [data]);
+  };
 
-  const trashNotes = useMemo(() => {
+  const trashNotes = () => {
     const noteData = data?.filter((noteDate) => noteDate.isOnTrash);
     if (noteData) {
       return noteData;
     }
     return [];
-  }, [data]);
+  };
 
-  const archivedNotes = useMemo(() => {
+  const archivedNotes = () => {
     const noteData = data?.filter((noteDate) => noteDate.isArchived);
     if (noteData) {
       return noteData;
     }
     return [];
-  }, [data]);
+  };
 
   const loadTags = useCallback((tagsData: string[]) => {
     setTags(tagsData);
@@ -82,14 +81,14 @@ export const ApplicationDataProvider = ({ children }: ApplicationDataProps) => {
   return (
     <ApplicationDataContext.Provider
       value={{
-        isError,
-        archivedNotes,
-        isLoading,
-        isSuccess,
-        notes,
-        trashNotes,
+        archivedNotes: archivedNotes(),
+        trashNotes: trashNotes(),
+        notes: notes(),
         loadTags,
         tags,
+        isError,
+        isLoading,
+        isSuccess,
       }}
     >
       {children}

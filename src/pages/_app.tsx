@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import { QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { ToastContainer } from 'react-toastify';
 import { queryClient } from 'services';
 import { ThemeProvider } from 'styled-components';
@@ -10,7 +11,6 @@ import {
 } from '@contexts/index';
 import { GlobalStyles } from '@styles/global';
 import { theme } from '@styles/theme';
-
 import 'react-toastify/dist/ReactToastify.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -23,6 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <ToastContainer />
           </ApplicationUseCaseProvider>
         </ApplicationDataProvider>
+        <ReactQueryDevtools />
       </QueryClientProvider>
 
       <GlobalStyles />
