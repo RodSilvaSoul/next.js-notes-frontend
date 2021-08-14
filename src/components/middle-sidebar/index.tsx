@@ -1,5 +1,7 @@
 import Image from 'next/image';
-import { memo, useMemo, useState } from 'react';
+import {
+  memo, useMemo, useState,
+} from 'react';
 import { RiAddFill } from 'react-icons/ri';
 
 import { IconButton, SearchInput } from '@components/forms';
@@ -33,27 +35,24 @@ const MiddleSidebarBase = ({
   const { addNewNote, editNote } = useUseCase();
 
   const allData = useMemo(() => {
-    if (data) {
-      const result = data.filter((noteData) => {
-        if (searchValue) {
-          if (noteData.title.toLocaleLowerCase().includes(searchValue)) {
-            return true;
-          }
-          return false;
+    const result = data.filter((noteData) => {
+      if (searchValue) {
+        if (noteData.title.toLocaleLowerCase().includes(searchValue)) {
+          return true;
         }
-        return true;
-      });
-      return result;
-    }
-    return [];
-  }, [currentPage, data, searchValue]);
+        return false;
+      }
+      return true;
+    });
+    return result;
+  }, [data, searchValue]);
 
   function handleAddButton() {
     editNote({
       id: 0,
-      isInView: false,
       note: '',
       title: '',
+      isInView: false,
       isArchived: false,
       isOnTrash: false,
     });

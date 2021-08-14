@@ -6,7 +6,7 @@ import { Note } from '@types';
 import { Container } from './styles';
 
 interface NotesWrapperProps {
-  data: Note[] | undefined;
+  data: Note[];
 }
 
 export const NotesWrapper = ({ data }: NotesWrapperProps) => {
@@ -24,8 +24,12 @@ export const NotesWrapper = ({ data }: NotesWrapperProps) => {
 
   return (
     <Container>
-      {data?.map((note) => (
-        <CardNote key={note.id} {...note} currentNodeOnClick={currentNode} />
+      {data.map((note) => (
+        <CardNote
+          key={note.id}
+          {...note}
+          currentNodeOnClick={currentNode}
+        />
       ))}
     </Container>
   );

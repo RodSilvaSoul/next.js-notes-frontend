@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { darken } from 'polished';
 import styled from 'styled-components';
 
@@ -29,4 +30,15 @@ export const Container = styled.button<ContainerProps>`
   &:focus {
     box-shadow: ${(props) => props.theme.shadows.blue[500]};
   }
+`;
+
+export const LoadingSpinner = styled(motion.div)`
+  height: 1.5rem;
+  width: 1.5rem;
+
+  border: 4px solid ${(props) => props.theme.pallet.black[500]};
+  border-radius: 1.5rem;
+
+  border-left-color: ${(props) => props.theme.pallet.black[200]};
+  border-top: color ${(props) => props.theme.pallet.black[200]};
 `;

@@ -1,10 +1,32 @@
 import { ButtonHTMLAttributes } from 'react';
 
-import { Container } from './styles';
+import { Container, LoadingSpinner } from './styles';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   textColor?: string;
   backgroundColor?: string;
+  isLoading?: boolean;
 }
 
-export const Button = (props: ButtonProps) => <Container {...props} />;
+export const Button = ({
+  isLoading = false,
+  children,
+  ...rest
+}: ButtonProps) => (
+  <Container {...rest}>
+    {isLoading ? (
+      <LoadingSpinner
+        animate={{
+          rotate: 360,
+        }}
+        transition={{
+          ease: 'linear',
+          duration: 1,
+          repeat: Infinity,
+        }}
+      />
+    ) : (
+      children
+    )}
+  </Container>
+);

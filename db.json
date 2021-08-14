@@ -1,27 +1,3 @@
 {
-  "notes": [
-    {
-      "id": 1,
-      "isArchived": false,
-      "isOnTrash": true,
-      "note": "asdlaçsdlaçldskd",
-      "title": "Cassia roberta"
-    },
-    {
-      "id": 2,
-      "isArchived": false,
-      "isOnTrash": false,
-      "note": "1233",
-      "title": "cassia"
-    },
-    {
-      "id": 3,
-      "isArchived": false,
-      "isOnTrash": false,
-      "note": "asdlaçsdlaçldskdas",
-      "title": "test3"
-    }
-  ],
-  "tags": [],
-  "trash-notes": []
+  "notes": []
 }

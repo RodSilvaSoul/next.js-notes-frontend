@@ -8,6 +8,7 @@ import {
   useCallback,
   useState,
 } from 'react';
+import { queryClient } from 'services';
 
 import { Note } from '@types';
 
@@ -27,6 +28,7 @@ interface ApplicationUseCase {
   cancelNewNote: () => void;
   editNote: (data: EditNoteData) => void;
   manageNote: (actionType: Actions, data: Note) => Promise<void>;
+  clearTrashNotes: () => void;
   isNoteTextAreaVisible: boolean;
   dataToBeEdited: EditNoteData;
 }
@@ -103,9 +105,21 @@ export const ApplicationUseCaseProvider = ({
     [deleteMutation, updateMutation],
   );
 
+  const clearTrashNotes = useCallback(() => {
+    const cachedData = queryClient.getQueryData<Note []>('notes');
+    if (cachedData) {
+      const dataToBeDeleted = cachedData.filter((noteData) => noteData?.isOnTrash);
+
+      dataToBeDeleted.forEach(async (note) => {
+        await deleteMutation.mutateAsync(note.id);
+      });
+    }
+  }, []);
+
   return (
     <ApplicationUseCaseContext.Provider
       value={{
+        clearTrashNotes,
         dataToBeEdited,
         editNote,
         manageNote,
