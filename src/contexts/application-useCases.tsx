@@ -9,28 +9,24 @@ import {
   useState,
 } from 'react';
 
-import { useData } from './application-data';
+import { Note } from '@types';
 
-type Actions = 'archive' | 'trash' | 'note' | 'delete';
+type Actions = 'archive' | 'trash' | 'note' | 'delete' | 'update';
 
 type EditNoteData = {
   id: number;
   title: string;
-  note: string,
+  note: string;
+  isArchived: boolean;
+  isOnTrash: boolean;
   isInView: boolean;
-}
-
-type UpdateNoteData = {
-  title?: string;
-  note?: string;
-}
+};
 
 interface ApplicationUseCase {
   addNewNote: () => void;
   cancelNewNote: () => void;
   editNote: (data: EditNoteData) => void;
-  manageNote: (id: number, actionType: Actions) => Promise<void>;
-  updateNote: (id: number, data: UpdateNoteData) => Promise<void>;
+  manageNote: (actionType: Actions, data: Note) => Promise<void>;
   isNoteTextAreaVisible: boolean;
   editData: EditNoteData;
 }
@@ -45,13 +41,14 @@ export const ApplicationUseCaseProvider = ({
   children,
 }: ApplicationUseCaseProviderProps) => {
   const [isNoteTextAreaVisible, setIsNoteTextAreaVisible] = useState(false);
-  const { notes, trashNotes, archivedNotes } = useData();
   const { deleteMutation, updateMutation } = useUpdatedNoteState();
   const [editData, setEditNote] = useState<EditNoteData>({
     id: 0,
     note: '',
     title: '',
+    isArchived: false,
     isInView: false,
+    isOnTrash: false,
   });
 
   const addNewNote = useCallback(() => {
@@ -63,71 +60,53 @@ export const ApplicationUseCaseProvider = ({
   }, []);
 
   const editNote = useCallback((data: EditNoteData) => {
-    setEditNote(data);
+    setEditNote({
+      ...data,
+      isInView: true,
+    });
   }, []);
 
   const manageNote = useCallback(
-    async (id: number, actionType: Actions) => {
+    async (actionType: Actions, data: Note) => {
       const actions = {
         archive: async () => {
-          const data = [...notes, ...trashNotes];
+          const noteData = data;
 
-          const noteData = data.find((note) => note.id === id);
-
-          if (noteData) {
-            noteData.isOnTrash = false;
-            noteData.isArchived = true;
-            await updateMutation.mutateAsync(noteData);
-          }
+          noteData.isOnTrash = false;
+          noteData.isArchived = true;
+          await updateMutation.mutateAsync(noteData);
         },
         trash: async () => {
-          const data = [...notes, ...archivedNotes];
+          const noteData = data;
 
-          const noteData = data.find((note) => note.id === id);
-
-          if (noteData) {
-            noteData.isArchived = false;
-            noteData.isOnTrash = true;
-            await updateMutation.mutateAsync(noteData);
-          }
+          noteData.isArchived = false;
+          noteData.isOnTrash = true;
+          await updateMutation.mutateAsync(noteData);
         },
         note: async () => {
-          const data = [...notes, ...archivedNotes, ...trashNotes];
+          const noteData = data;
 
-          const noteData = data.find((note) => note.id === id);
-
-          if (noteData) {
-            noteData.isArchived = false;
-            noteData.isOnTrash = false;
-            await updateMutation.mutateAsync(noteData);
-          }
+          noteData.isArchived = false;
+          noteData.isOnTrash = false;
+          await updateMutation.mutateAsync(noteData);
         },
         delete: async () => {
-          await deleteMutation.mutateAsync(id);
+          await deleteMutation.mutateAsync(data.id);
+        },
+        update: async () => {
+          await updateMutation.mutateAsync(data);
         },
       };
 
       const action = actions[actionType];
       await action();
     },
-    [updateMutation, notes, trashNotes, archivedNotes, deleteMutation],
+    [deleteMutation, updateMutation],
   );
-
-  const updateNote = useCallback(async (id: number, data: UpdateNoteData) => {
-    const allData = [...archivedNotes, ...notes, ...trashNotes];
-    const noteData = allData.find((note) => note.id === id);
-    if (noteData) {
-      await updateMutation.mutateAsync({
-        ...noteData,
-        ...data,
-      });
-    }
-  }, [archivedNotes, notes, trashNotes, updateMutation]);
 
   return (
     <ApplicationUseCaseContext.Provider
       value={{
-        updateNote,
         editData,
         editNote,
         manageNote,

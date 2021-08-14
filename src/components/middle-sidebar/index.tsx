@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import { useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { RiAddFill } from 'react-icons/ri';
 
 import { IconButton, SearchInput } from '@components/forms';
 import { ThreeBallLoading } from '@components/progress';
-import { useData } from '@contexts/application-data';
 import { useUseCase } from '@contexts/application-useCases';
+import { FilteredData } from '@util/filter-data';
 
 import ErrorImage from '../../../public/error.png';
 import { NotesWrapper } from './notes-wrapper';
@@ -14,43 +14,41 @@ import {
 } from './styles';
 
 interface MiddleSidebarProps {
-  currentPage: 'Trash' | 'Archived' | 'Notes'
+  currentPage: 'Trash' | 'Archived' | 'Notes';
+  data: FilteredData | undefined;
+  isError: boolean;
+  isSuccess: boolean;
+  isLoading: boolean;
 }
 
-export const MiddleSidebar = ({ currentPage }: MiddleSidebarProps) => {
+const MiddleSidebarBase = ({
+  currentPage,
+  isError,
+  isLoading,
+  isSuccess,
+  data,
+}: MiddleSidebarProps) => {
   const [searchValue, setSearchValue] = useState('');
-
-  const {
-    isError,
-    isSuccess,
-    isLoading,
-    archivedNotes,
-    trashNotes,
-    notes,
-  } = useData();
 
   const { addNewNote, editNote } = useUseCase();
 
-  const data = useMemo(() => {
-    const allData = {
-      Notes: notes,
-      Trash: trashNotes,
-      Archived: archivedNotes,
-    };
-
-    const result = allData[currentPage].filter((noteData) => {
-      if (searchValue) {
-        if (noteData.title.includes(searchValue)) {
-          return true;
+  const allData = useMemo(() => {
+    if (data) {
+      const result = data[currentPage].filter((noteData) => {
+        if (searchValue) {
+          if (noteData.title.includes(searchValue)) {
+            return true;
+          }
+          return false;
         }
-        return false;
-      }
-      return true;
-    });
-    return result;
-  }, [archivedNotes, currentPage, notes, searchValue, trashNotes]);
+        return true;
+      });
+      return result;
+    }
+    return [];
+  }, [currentPage, data, searchValue]);
 
-  function handleAddButton () {
+  function handleAddButton() {
     editNote({
       id: 0,
       isInView: false,
@@ -93,7 +91,9 @@ export const MiddleSidebar = ({ currentPage }: MiddleSidebarProps) => {
           <p>Error loading notes</p>
         </ErrorWrapper>
       )}
-      {isSuccess && <NotesWrapper data={data} />}
+      {isSuccess && <NotesWrapper data={allData} />}
     </Container>
   );
 };
+
+export const MiddleSidebar = memo(MiddleSidebarBase);

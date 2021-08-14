@@ -41,7 +41,7 @@ const NotesSectionComponent = () => {
     editData,
     addNewNote,
     editNote,
-    updateNote,
+    manageNote,
   } = useUseCase();
 
   const {
@@ -92,13 +92,18 @@ const NotesSectionComponent = () => {
       isInView: false,
       note: '',
       title: '',
+      isArchived: false,
+      isOnTrash: false,
     });
     cancelNewNote();
   }
 
   const handleSentNote: SubmitHandler<FormData> = async (data) => {
     if (editData.isInView) {
-      await updateNote(editData.id, data);
+      await manageNote('update',{
+        ...editData,
+        ...data
+      });
       return;
     }
 
@@ -158,13 +163,13 @@ const NotesSectionComponent = () => {
                   </Button>
                 )}
                 {!editData.isInView && (
-                <Button
-                  backgroundColor={theme.pallet.green[500]}
-                  type="submit"
-                  aria-label="save notes button"
-                >
-                  Save
-                </Button>
+                  <Button
+                    backgroundColor={theme.pallet.green[500]}
+                    type="submit"
+                    aria-label="save notes button"
+                  >
+                    Save
+                  </Button>
                 )}
                 <Button
                   backgroundColor={theme.pallet.red[500]}

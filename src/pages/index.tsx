@@ -9,12 +9,21 @@ import { Container } from '@styles/pages';
 import { filterData, FilteredData } from '@util/filter-data';
 
 export default function Home() {
-  const { data } = useQuery<FilteredData>('notes', async () => {
-    const resp = await api.get('/notes');
-    const result = filterData(resp.data);
+  const {
+    data, isLoading, isSuccess, isError,
+  } = useQuery<FilteredData>(
+    'notes',
+    async () => {
+      const resp = await api.get('/notes');
+      const result = filterData(resp.data);
 
-    return result;
-  });
+      return result;
+    },
+  );
+
+  const trashCount = data?.Trash.length;
+  const archivedCount = data?.Archived.length;
+  const notesCount = data?.Notes.length;
 
   return (
     <>
@@ -22,8 +31,18 @@ export default function Home() {
         <title>Simple notes | Notes</title>
       </Head>
       <Container>
-        <Sidebar />
-        <MiddleSidebar currentPage="Notes" />
+        <Sidebar
+          archivedCount={archivedCount}
+          notesCount={notesCount}
+          trashCount={trashCount}
+        />
+        <MiddleSidebar
+          isError={isError}
+          isLoading={isLoading}
+          isSuccess={isSuccess}
+          data={data}
+          currentPage="Notes"
+        />
         <NotesSection />
       </Container>
     </>

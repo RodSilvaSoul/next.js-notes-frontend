@@ -24,7 +24,6 @@ interface CardNoteProps extends Note {
 }
 
 export const CardNoteComponent = ({
-  createdAt,
   note,
   title,
   id,
@@ -56,7 +55,6 @@ export const CardNoteComponent = ({
       )}
       <h2>{title}</h2>
       <h3>{note}</h3>
-      <small>{createdAt}</small>
       <OptionsButton
         type="button"
         onClick={handleOptionsButton}
@@ -75,7 +73,16 @@ export const CardNoteComponent = ({
           >
             {!isOnTrash && (
               <li>
-                <button type="button" onClick={() => manageNote(id, 'trash')}>
+                <button
+                  type="button"
+                  onClick={() => manageNote('trash', {
+                    id,
+                    isArchived,
+                    isOnTrash,
+                    note,
+                    title,
+                  })}
+                >
                   Move to trash
                   <RiDeleteBin6Fill />
                 </button>
@@ -89,6 +96,8 @@ export const CardNoteComponent = ({
                   note,
                   title,
                   isInView: true,
+                  isArchived,
+                  isOnTrash,
                 })}
               >
                 Edit
@@ -97,7 +106,16 @@ export const CardNoteComponent = ({
             </li>
             {!isArchived && (
               <li>
-                <button type="button" onClick={() => manageNote(id, 'archive')}>
+                <button
+                  type="button"
+                  onClick={() => manageNote('archive', {
+                    id,
+                    isArchived,
+                    isOnTrash,
+                    note,
+                    title,
+                  })}
+                >
                   Archive
                   <RiInboxArchiveFill />
                 </button>
@@ -105,7 +123,16 @@ export const CardNoteComponent = ({
             )}
             {isArchived && (
               <li>
-                <button type="button" onClick={() => manageNote(id, 'note')}>
+                <button
+                  type="button"
+                  onClick={() => manageNote('note', {
+                    id,
+                    isArchived,
+                    isOnTrash,
+                    note,
+                    title,
+                  })}
+                >
                   unarchive
                   <RiInboxUnarchiveFill />
                 </button>
@@ -113,7 +140,16 @@ export const CardNoteComponent = ({
             )}
             {isOnTrash && (
               <li>
-                <button type="button" onClick={() => manageNote(id, 'delete')}>
+                <button
+                  type="button"
+                  onClick={() => manageNote('delete', {
+                    id,
+                    isArchived,
+                    isOnTrash,
+                    note,
+                    title,
+                  })}
+                >
                   Delete permanently
                   <MdClear />
                 </button>
@@ -121,7 +157,16 @@ export const CardNoteComponent = ({
             )}
             {isOnTrash && (
               <li>
-                <button type="button" onClick={() => manageNote(id, 'note')}>
+                <button
+                  type="button"
+                  onClick={() => manageNote('note', {
+                    id,
+                    isArchived,
+                    isOnTrash,
+                    note,
+                    title,
+                  })}
+                >
                   Restore
                   <MdRestore />
                 </button>

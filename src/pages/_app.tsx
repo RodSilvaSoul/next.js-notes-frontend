@@ -6,10 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import { queryClient } from 'services';
 import { ThemeProvider } from 'styled-components';
 
-import {
-  ApplicationDataProvider,
-  ApplicationUseCaseProvider,
-} from '@contexts/index';
+import { ApplicationUseCaseProvider } from '@contexts/index';
 import { GlobalStyles } from '@styles/global';
 import { theme } from '@styles/theme';
 
@@ -20,16 +17,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <ApplicationDataProvider>
-            <ApplicationUseCaseProvider>
-              <Component {...pageProps} />
-              <ToastContainer />
-            </ApplicationUseCaseProvider>
-          </ApplicationDataProvider>
+          <ApplicationUseCaseProvider>
+            <Component {...pageProps} />
+            <ToastContainer />
+          </ApplicationUseCaseProvider>
         </Hydrate>
         <ReactQueryDevtools />
       </QueryClientProvider>
-
       <GlobalStyles />
     </ThemeProvider>
   );
