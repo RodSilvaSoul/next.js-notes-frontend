@@ -1,17 +1,48 @@
 import Head from 'next/head';
+import { useQuery } from 'react-query';
+import { api } from 'services';
 
 import { Sidebar, MiddleSidebar, NotesSection } from '@components/index';
 import { Container } from '@styles/pages';
+import { Note } from '@types';
+import { filterData } from '@util/data-helpers';
 
-export default function Trash() {
+export default function Home() {
+  const {
+    data, isLoading, isSuccess, isError,
+  } = useQuery<Note[]>(
+    'notes',
+    async () => {
+      const resp = await api.get('/notes');
+
+      return resp.data;
+    },
+  );
+
+  const dataFiltered = filterData(data ?? []);
+
+  const trashCount = dataFiltered.trash.length;
+  const archivedCount = dataFiltered.archived.length;
+  const notesCount = dataFiltered.notes.length;
+
   return (
     <>
       <Head>
-        <title>Simple notes | Archived</title>
+        <title>Simple notes | Notes</title>
       </Head>
       <Container>
-        <Sidebar />
-        <MiddleSidebar currentPage="Archived" />
+        <Sidebar
+          archivedCount={archivedCount}
+          notesCount={notesCount}
+          trashCount={trashCount}
+        />
+        <MiddleSidebar
+          currentPage="Archived"
+          isError={isError}
+          isLoading={isLoading}
+          isSuccess={isSuccess}
+          data={dataFiltered.archived}
+        />
         <NotesSection />
       </Container>
     </>

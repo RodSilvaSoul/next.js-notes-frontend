@@ -8,6 +8,7 @@ export const Container = styled.section`
   width: 60%;
 
   padding: 1rem 0.7rem;
+
 `;
 
 export const Header = styled.div`

@@ -27,6 +27,6 @@ export const Container = styled.button<ContainerProps>`
   }
 
   &:focus {
-    border-color: ${(props) => props.theme.pallet.black[200]};
+    box-shadow: ${(props) => props.theme.shadows.blue[500]};
   }
 `;

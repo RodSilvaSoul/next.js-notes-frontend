@@ -30,4 +30,9 @@ export const theme = {
       400: '#3498db',
     },
   },
+  shadows: {
+    blue: {
+      500: 'rgba(3, 102, 214, 0.8) 0px 0px 0px 3px',
+    },
+  },
 };

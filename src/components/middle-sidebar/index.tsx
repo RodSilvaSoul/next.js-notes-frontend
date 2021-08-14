@@ -5,7 +5,7 @@ import { RiAddFill } from 'react-icons/ri';
 import { IconButton, SearchInput } from '@components/forms';
 import { ThreeBallLoading } from '@components/progress';
 import { useUseCase } from '@contexts/application-useCases';
-import { FilteredData } from '@util/filter-data';
+import { Note } from '@types';
 
 import ErrorImage from '../../../public/error.png';
 import { NotesWrapper } from './notes-wrapper';
@@ -15,7 +15,7 @@ import {
 
 interface MiddleSidebarProps {
   currentPage: 'Trash' | 'Archived' | 'Notes';
-  data: FilteredData | undefined;
+  data: Note[];
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
@@ -34,9 +34,9 @@ const MiddleSidebarBase = ({
 
   const allData = useMemo(() => {
     if (data) {
-      const result = data[currentPage].filter((noteData) => {
+      const result = data.filter((noteData) => {
         if (searchValue) {
-          if (noteData.title.includes(searchValue)) {
+          if (noteData.title.toLocaleLowerCase().includes(searchValue)) {
             return true;
           }
           return false;
@@ -54,6 +54,8 @@ const MiddleSidebarBase = ({
       isInView: false,
       note: '',
       title: '',
+      isArchived: false,
+      isOnTrash: false,
     });
     addNewNote();
   }
@@ -71,7 +73,7 @@ const MiddleSidebarBase = ({
           aria-label="Search for notes"
           placeholder="Search for notes"
           value={searchValue}
-          onChange={(event) => setSearchValue(event.currentTarget.value)}
+          onChange={(event) => setSearchValue(event.currentTarget.value.toLowerCase())}
         />
       </Header>
       {isLoading && (

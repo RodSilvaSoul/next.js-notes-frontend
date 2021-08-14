@@ -2,15 +2,13 @@ import { AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { memo, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
-import { toast } from 'react-toastify';
-import { api, queryClient } from 'services';
 import * as yup from 'yup';
 
 import { Button, InputInline, NoteTextArea } from '@components/forms';
 import { InputTag } from '@components/forms/input-tag';
 import { useUseCase } from '@contexts/application-useCases';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useQueryMutations } from '@hooks/use-query-mutations';
 import { theme } from '@styles/theme';
 
 import notesImage from '../../../public/notes.png';
@@ -38,11 +36,13 @@ const NotesSectionComponent = () => {
   const {
     isNoteTextAreaVisible,
     cancelNewNote,
-    editData,
+    dataToBeEdited,
     addNewNote,
     editNote,
     manageNote,
   } = useUseCase();
+
+  const { saveMutation } = useQueryMutations();
 
   const {
     register,
@@ -55,36 +55,14 @@ const NotesSectionComponent = () => {
 
   useEffect(() => {
     reset({
-      title: editData.title,
-      note: editData.note,
+      title: dataToBeEdited.title,
+      note: dataToBeEdited.note,
     });
 
-    if (editData.isInView) {
+    if (dataToBeEdited.isInView) {
       addNewNote();
     }
-  }, [editData, reset, addNewNote]);
-
-  const { mutateAsync } = useMutation(
-    async (data: FormData) => {
-      await api.post('/notes', data);
-    },
-    {
-      onError: () => {
-        toast.error('Sorry, an error happened', {
-          closeOnClick: true,
-        });
-      },
-      onSuccess: () => {
-        queryClient.invalidateQueries('notes');
-        cancelNewNote();
-        toast.success('Saved successfully! ✅');
-        reset({
-          title: '',
-          note: '',
-        });
-      },
-    },
-  );
+  }, [dataToBeEdited, reset, addNewNote]);
 
   function handleCancelButton() {
     editNote({
@@ -99,15 +77,15 @@ const NotesSectionComponent = () => {
   }
 
   const handleSentNote: SubmitHandler<FormData> = async (data) => {
-    if (editData.isInView) {
-      await manageNote('update',{
-        ...editData,
-        ...data
+    if (dataToBeEdited.isInView) {
+      await manageNote('update', {
+        ...dataToBeEdited,
+        ...data,
       });
       return;
     }
 
-    await mutateAsync(data);
+    await saveMutation.mutateAsync(data);
   };
 
   return (
@@ -153,7 +131,7 @@ const NotesSectionComponent = () => {
                 {...register('note')}
               />
               <ButtonGroup>
-                {editData.isInView && (
+                {dataToBeEdited.isInView && (
                   <Button
                     backgroundColor={theme.pallet.blue[400]}
                     type="submit"
@@ -162,7 +140,7 @@ const NotesSectionComponent = () => {
                     update
                   </Button>
                 )}
-                {!editData.isInView && (
+                {!dataToBeEdited.isInView && (
                   <Button
                     backgroundColor={theme.pallet.green[500]}
                     type="submit"

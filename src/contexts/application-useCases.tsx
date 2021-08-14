@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import { useUpdatedNoteState } from 'hooks';
+import { useQueryMutations } from 'hooks';
 import {
   useContext,
   createContext,
@@ -28,7 +28,7 @@ interface ApplicationUseCase {
   editNote: (data: EditNoteData) => void;
   manageNote: (actionType: Actions, data: Note) => Promise<void>;
   isNoteTextAreaVisible: boolean;
-  editData: EditNoteData;
+  dataToBeEdited: EditNoteData;
 }
 
 const ApplicationUseCaseContext = createContext<ApplicationUseCase>({} as any);
@@ -41,8 +41,8 @@ export const ApplicationUseCaseProvider = ({
   children,
 }: ApplicationUseCaseProviderProps) => {
   const [isNoteTextAreaVisible, setIsNoteTextAreaVisible] = useState(false);
-  const { deleteMutation, updateMutation } = useUpdatedNoteState();
-  const [editData, setEditNote] = useState<EditNoteData>({
+  const { deleteMutation, updateMutation } = useQueryMutations();
+  const [dataToBeEdited, setDataToBeEdited] = useState<EditNoteData>({
     id: 0,
     note: '',
     title: '',
@@ -60,9 +60,8 @@ export const ApplicationUseCaseProvider = ({
   }, []);
 
   const editNote = useCallback((data: EditNoteData) => {
-    setEditNote({
+    setDataToBeEdited({
       ...data,
-      isInView: true,
     });
   }, []);
 
@@ -107,7 +106,7 @@ export const ApplicationUseCaseProvider = ({
   return (
     <ApplicationUseCaseContext.Provider
       value={{
-        editData,
+        dataToBeEdited,
         editNote,
         manageNote,
         addNewNote,

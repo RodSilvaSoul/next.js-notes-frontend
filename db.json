@@ -2,50 +2,24 @@
   "notes": [
     {
       "id": 1,
-      "title": "carlat",
-      "note": "asdlaçsdlaçldskd",
+      "isArchived": false,
       "isOnTrash": true,
-      "isArchived": false
+      "note": "asdlaçsdlaçldskd",
+      "title": "Cassia roberta"
     },
     {
       "id": 2,
-      "title": "cassia",
-      "note": "1233",
+      "isArchived": false,
       "isOnTrash": false,
-      "isArchived": true
+      "note": "1233",
+      "title": "cassia"
     },
     {
       "id": 3,
-      "title": "test3",
-      "note": "asdlaçsdlaçldskdas",
-      "isOnTrash": true,
-      "isArchived": false
-    },
-    {
-      "id": 4,
-      "title": "test5",
-      "note": "asdlaçsdlaçldskdas",
-      "isOnTrash": true,
-      "isArchived": false
-    },
-    {
-      "id": 5,
-      "title": "test6",
-      "note": "asdlaçsdlaçldskdas"
-    },
-    {
-      "id": 6,
-      "title": "test7",
-      "note": "asdlaçsdlaçldskdas",
-      "isOnTrash": true,
-      "isArchived": false
-    },
-    {
-      "id": 7,
-      "title": "test8",
-      "note": "asdlaçsdlaçldskdas",
+      "isArchived": false,
       "isOnTrash": false,
-      "isArchived": true
+      "note": "asdlaçsdlaçldskdas",
+      "title": "test3"
     }
   ],
   "tags": [],

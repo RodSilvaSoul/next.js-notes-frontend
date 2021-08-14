@@ -1,15 +1,15 @@
 import { Note } from '@types';
 
 export type FilteredData = {
-  Trash: Note []
-  Archived: Note []
-  Notes: Note[]
-}
+  trash: Note[];
+  archived: Note[];
+  notes: Note[];
+};
 
 export const filterData = (data: Note[]): FilteredData => {
-  const Trash = data.filter((note) => note.isOnTrash);
-  const Archived = data.filter((note) => note.isArchived);
-  const Notes = data.filter((note) => {
+  const trash = data.filter((note) => note.isOnTrash);
+  const archived = data.filter((note) => note.isArchived);
+  const notes = data.filter((note) => {
     if (!note.isOnTrash && !note.isArchived) {
       return true;
     }
@@ -17,9 +17,9 @@ export const filterData = (data: Note[]): FilteredData => {
   });
 
   const allData = {
-    Trash,
-    Archived,
-    Notes,
+    trash,
+    archived,
+    notes,
   };
 
   return allData;

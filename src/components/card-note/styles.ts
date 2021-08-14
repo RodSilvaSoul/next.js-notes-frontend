@@ -9,17 +9,22 @@ export const Container = styled.div`
 
   width: 100%;
   padding: 1rem;
-  background-color: ${(props) => props.theme.pallet.black[200]};
+  background-color: #f7fafc;
   border: 0;
   border-radius: 0.3rem;
   font-family: inherit;
   color: inherit;
 
   cursor: pointer;
- 
+  max-width: 18.625rem;
+
   > h2 {
     font-size: 1.1rem;
     margin: 0.2rem 0;
+    color: ${(props) => props.theme.pallet.black[500]};
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 15.625rem;
   }
 
   > h3 {
@@ -28,7 +33,7 @@ export const Container = styled.div`
     font-size: 1rem;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%;
+    max-width: 15.625rem;
   }
 `;
 
@@ -47,13 +52,18 @@ export const OptionsButton = styled.button`
   width: 2rem;
 
   border: 0;
-  border-radius: 2rem;
+  border-radius: 0.5rem;
+
+  transition: all 0.3s;
 
   background-color: ${(props) => props.theme.pallet.black[300]};
   color: ${(props) => props.theme.pallet.black[200]};
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 
   &:hover {
     background-color: ${(props) => props.theme.pallet.black[400]};
+    box-shadow:unset ;
   }
 `;
 

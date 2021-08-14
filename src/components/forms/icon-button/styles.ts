@@ -1,4 +1,3 @@
-import { darken } from 'polished';
 import styled from 'styled-components';
 
 export const Container = styled.button`
@@ -17,10 +16,10 @@ export const Container = styled.button`
   transition: all 0.3s;
 
   &:hover {
-    background-color: ${(props) => darken(0.2, props.theme.pallet.black[500])};
+    filter: brightness(0.8);
   }
 
   &:focus {
-    border-color: ${(props) => props.theme.pallet.black[200]};
+   box-shadow: ${(props) => props.theme.shadows.blue[500]}
   }
 `;

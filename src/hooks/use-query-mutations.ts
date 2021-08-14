@@ -4,7 +4,12 @@ import { api, queryClient } from 'services';
 
 import { Note } from '@types';
 
-export const useUpdatedNoteState = () => {
+type FormData = {
+  title: string;
+  note: string;
+};
+
+export const useQueryMutations = () => {
   const updateMutation = useMutation(
     async (data: Note) => {
       await api.put(`/notes/${data.id}`, data);
@@ -17,18 +22,15 @@ export const useUpdatedNoteState = () => {
           'notes',
         )) as Note[];
 
-        const index = previousData.findIndex(
-          (dataNote) => dataNote.id === data.id,
-        );
+        const newData = previousData;
+
+        const index = newData?.findIndex((note) => note.id === data.id);
 
         if (index > -1) {
-          const newData = previousData;
-
           newData[index] = data;
-
-          queryClient.setQueryData('notes', newData);
         }
 
+        queryClient.setQueryData('notes', newData);
         return previousData;
       },
       onError: async (err, data, context) => {
@@ -69,7 +71,31 @@ export const useUpdatedNoteState = () => {
     },
   );
 
+  const saveMutation = useMutation(
+    async (data: FormData) => {
+      await api.post('/notes', data);
+    },
+    {
+      onError: async (data) => {
+        await queryClient.setQueryData('notes', data);
+        toast.error('Sorry, an error happened', {
+          closeOnClick: true,
+        });
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries('notes');
+        toast.success('Saved successfully! ✅', {
+          closeOnClick: true,
+        });
+      },
+      onSettled: async () => {
+        await queryClient.invalidateQueries('notes');
+      },
+    },
+  );
+
   return {
+    saveMutation,
     deleteMutation,
     updateMutation,
   };
