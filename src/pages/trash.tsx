@@ -7,7 +7,7 @@ export default function Trash() {
   return (
     <>
       <Head>
-        <title>Trash</title>
+        <title>Simple notes | Trash</title>
       </Head>
       <Container>
         <Sidebar />

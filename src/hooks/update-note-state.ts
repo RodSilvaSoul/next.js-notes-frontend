@@ -38,9 +38,6 @@ export const useUpdatedNoteState = () => {
       onSettled: async () => {
         await queryClient.invalidateQueries('notes');
       },
-      onSuccess: () => {
-        toast.success('Updated successfully');
-      },
     },
   );
 
@@ -68,9 +65,6 @@ export const useUpdatedNoteState = () => {
       },
       onSettled: async () => {
         await queryClient.invalidateQueries('notes');
-      },
-      onSuccess: () => {
-        toast.success('Deleted successfully');
       },
     },
   );

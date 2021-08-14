@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 
-import { Omit } from 'framer-motion/types/types';
 import { useUpdatedNoteState } from 'hooks';
 import {
   useContext,

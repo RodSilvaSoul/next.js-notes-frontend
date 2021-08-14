@@ -2,17 +2,17 @@
   "notes": [
     {
       "id": 1,
-      "title": "test1",
-      "note": "asdlaçsdlaçldskdas",
-      "isOnTrash": false,
+      "title": "carlat",
+      "note": "asdlaçsdlaçldskd",
+      "isOnTrash": true,
       "isArchived": false
     },
     {
       "id": 2,
       "title": "cassia",
-      "note": "1234",
+      "note": "1233",
       "isOnTrash": false,
-      "isArchived": false
+      "isArchived": true
     },
     {
       "id": 3,
@@ -25,7 +25,7 @@
       "id": 4,
       "title": "test5",
       "note": "asdlaçsdlaçldskdas",
-      "isOnTrash": false,
+      "isOnTrash": true,
       "isArchived": false
     },
     {
@@ -36,12 +36,16 @@
     {
       "id": 6,
       "title": "test7",
-      "note": "asdlaçsdlaçldskdas"
+      "note": "asdlaçsdlaçldskdas",
+      "isOnTrash": true,
+      "isArchived": false
     },
     {
       "id": 7,
       "title": "test8",
-      "note": "asdlaçsdlaçldskdas"
+      "note": "asdlaçsdlaçldskdas",
+      "isOnTrash": false,
+      "isArchived": true
     }
   ],
   "tags": [],
