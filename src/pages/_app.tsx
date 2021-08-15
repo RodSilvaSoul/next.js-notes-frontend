@@ -7,13 +7,13 @@ import { ThemeProvider } from 'styled-components';
 
 import { ApplicationUseCaseProvider } from '@contexts/index';
 import { GlobalStyles } from '@styles/global';
-import { theme } from '@styles/theme';
+import { themeDark } from '@styles/theme-dark';
 
 import 'react-toastify/dist/ReactToastify.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={themeDark}>
       <QueryClientProvider client={queryClient}>
         <ApplicationUseCaseProvider>
           <Component {...pageProps} />

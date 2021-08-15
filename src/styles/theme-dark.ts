@@ -1,4 +1,4 @@
-export const theme = {
+export const themeDark = {
   title: 'dark',
   breakPoints: {
     // 576px

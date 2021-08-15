@@ -34,6 +34,10 @@ const GlobalStyles = createGlobalStyle`
 		cursor: wait;
 		opacity: 0.8;
 	}
+
+	* {
+		transition: background-color 0.3s, color 0.3s;
+	}
 `;
 
 export { GlobalStyles };
