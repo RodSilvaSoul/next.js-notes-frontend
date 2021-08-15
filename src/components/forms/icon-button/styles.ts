@@ -1,14 +1,18 @@
 import styled from 'styled-components';
 
-export const Container = styled.button`
+interface ButtonProps {
+  colorBackground?: string;
+}
+
+export const Container = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background-color: ${(props) => props.theme.pallet.black[500]};
+  background-color: ${(props) => props.colorBackground ?? props.theme.pallet.secondary};
   font-family: inherit;
   font-weight: 500;
-  color: #ffff;
+  color: ${(props) => props.theme.text.primary};
   border: 2px solid transparent;
   border-radius: 0.3rem;
   padding: 0.2rem 1rem;
@@ -21,6 +25,6 @@ export const Container = styled.button`
   }
 
   &:focus {
-   box-shadow: ${(props) => props.theme.shadows.blue[500]}
+    box-shadow: ${(props) => props.theme.shadows.blue[500]};
   }
 `;

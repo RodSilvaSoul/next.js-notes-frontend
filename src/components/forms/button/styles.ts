@@ -13,7 +13,7 @@ export const Container = styled.button<ContainerProps>`
   font-weight: 500;
   font-size: 0.9rem;
   color: ${(props) => props.textColor ?? '#ffff'};
-  background-color: ${(props) => props.backgroundColor ?? props.theme.pallet.black[500]};
+  background-color: ${(props) => props.backgroundColor ?? props.theme.pallet.secondary};
   border: 2px solid transparent;
   border-radius: 0.3rem;
   outline: none;
@@ -22,7 +22,7 @@ export const Container = styled.button<ContainerProps>`
 
   &:hover {
     background-color: ${(props) => {
-    const color = props.backgroundColor ?? props.theme.pallet.black[500];
+    const color = props.backgroundColor ?? props.theme.pallet.secondary;
     return darken(0.1, color);
   }};
   }
@@ -36,9 +36,9 @@ export const LoadingSpinner = styled(motion.div)`
   height: 1.5rem;
   width: 1.5rem;
 
-  border: 4px solid ${(props) => props.theme.pallet.black[500]};
+  border: 4px solid ${(props) => props.theme.pallet.secondary};
   border-radius: 1.5rem;
 
-  border-left-color: ${(props) => props.theme.pallet.black[200]};
-  border-top: color ${(props) => props.theme.pallet.black[200]};
+  border-left-color: ${(props) => props.theme.pallet.secondary};
+  border-top: color ${(props) => props.theme.pallet.secondary};
 `;

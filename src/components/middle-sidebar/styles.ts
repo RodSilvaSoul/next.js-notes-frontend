@@ -4,9 +4,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  background-color: ${(props) => props.theme.pallet.black[600]};
+  background-color: ${(props) => props.theme.pallet.secondary};
   width: 25%;
-  color: #ffff;
+  color: ${(props) => props.theme.text.primary};
 
   max-height: 100vh;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
@@ -16,11 +16,7 @@ export const Container = styled.div`
 export const Header = styled.div`
   padding: 1rem;
   padding-bottom: 2rem;
-  background-color: ${(props) => props.theme.pallet.black[700]};
-
-  button {
-    background-color: ${(props) => props.theme.pallet.black[300]};
-  }
+  background-color: ${(props) => props.theme.pallet.secondary};
 
   > div {
     display: flex;

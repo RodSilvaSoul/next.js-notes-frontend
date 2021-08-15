@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.input`
-  color: ${(props) => props.theme.pallet.black[600]};
-  background-color: ${(props) => props.theme.pallet.black[200]};
+  color: ${(props) => props.theme.pallet.secondary};
+  background-color: ${(props) => props.theme.pallet.shape};
   font-family: inherit;
   line-height: 1.5;
 
@@ -21,11 +21,10 @@ export const Container = styled.input`
 
   outline: none;
 
-  border: 3px solid transparent;
 
   transition: border-color 0.3s;
 
   &:focus {
-    border-color: ${(props) => props.theme.pallet.black[300]};
+    box-shadow: ${(props) => props.theme.shadows.blue[500]};
   }
 `;

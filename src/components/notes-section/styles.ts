@@ -3,12 +3,11 @@ import styled from 'styled-components';
 
 export const Container = styled.section`
   overflow: hidden;
-  color: #ffff;
-  background-color: ${(props) => props.theme.pallet.black[300]};
+  color: ${(props) => props.theme.text.primary};
+  background-color: ${(props) => props.theme.pallet.primary};
   width: 60%;
 
   padding: 1rem 0.7rem;
-
 `;
 
 export const Header = styled.div`

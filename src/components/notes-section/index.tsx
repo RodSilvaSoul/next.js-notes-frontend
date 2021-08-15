@@ -1,14 +1,14 @@
 import { AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { memo, useEffect } from 'react';
+import { memo, useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { ThemeContext } from 'styled-components';
 import * as yup from 'yup';
 
 import { Button, InputInline, NoteTextArea } from '@components/forms';
 import { useUseCase } from '@contexts/application-useCases';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useQueryMutations } from '@hooks/use-query-mutations';
-import { theme } from '@styles/theme';
 
 import notesImage from '../../../public/notes.png';
 import { motionVariants } from './config';
@@ -32,6 +32,7 @@ const formNoteSchema = yup.object().shape({
 });
 
 const NotesSectionComponent = () => {
+  const { pallet } = useContext(ThemeContext);
   const {
     isNoteTextAreaVisible,
     cancelNewNote,
@@ -131,7 +132,7 @@ const NotesSectionComponent = () => {
               <ButtonGroup>
                 {dataToBeEdited.isInView && (
                   <Button
-                    backgroundColor={theme.pallet.blue[400]}
+                    backgroundColor={pallet.alert}
                     type="submit"
                     aria-label="edit notes button"
                     isLoading={isSubmitting}
@@ -141,7 +142,7 @@ const NotesSectionComponent = () => {
                 )}
                 {!dataToBeEdited.isInView && (
                   <Button
-                    backgroundColor={theme.pallet.green[500]}
+                    backgroundColor={pallet.success}
                     type="submit"
                     aria-label="save notes button"
                     isLoading={isSubmitting}
@@ -150,7 +151,7 @@ const NotesSectionComponent = () => {
                   </Button>
                 )}
                 <Button
-                  backgroundColor={theme.pallet.red[500]}
+                  backgroundColor={pallet.error}
                   type="button"
                   aria-label="cancel notes button"
                   onClick={handleCancelButton}

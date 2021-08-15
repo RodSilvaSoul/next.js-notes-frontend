@@ -1,6 +1,6 @@
 import { AnimatePresence } from 'framer-motion';
 import {
-  memo, useEffect, useRef, useState,
+  memo, useEffect, useRef, useState, useContext,
 } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { MdModeEdit, MdClear, MdRestore } from 'react-icons/md';
@@ -9,9 +9,9 @@ import {
   RiInboxUnarchiveFill,
   RiInboxArchiveFill,
 } from 'react-icons/ri';
+import { ThemeContext } from 'styled-components';
 
 import { useUseCase } from '@contexts/application-useCases';
-import { theme } from '@styles/theme';
 import { Note } from '@types';
 
 import { motionMenuVariants } from './config';
@@ -33,7 +33,7 @@ export const CardNoteComponent = ({
 }: CardNoteProps) => {
   const [isMenuOptionsHidden, setIsMenuOptionsHidden] = useState(false);
   const { manageNote, editNote } = useUseCase();
-
+  const { pallet } = useContext(ThemeContext);
   const optionsRef = useRef<HTMLUListElement>(null);
 
   function handleOptionsButton() {
@@ -48,12 +48,8 @@ export const CardNoteComponent = ({
 
   return (
     <Container>
-      {isArchived && (
-        <Badge colorBackground={theme.pallet.green[500]}>Archived</Badge>
-      )}
-      {isOnTrash && (
-        <Badge colorBackground={theme.pallet.blue[400]}>Trash</Badge>
-      )}
+      {isArchived && <Badge colorBackground={pallet.success}>Archived</Badge>}
+      {isOnTrash && <Badge colorBackground={pallet.alert}>Trash</Badge>}
       <h2>{title}</h2>
       <h3>{note}</h3>
       <OptionsButton

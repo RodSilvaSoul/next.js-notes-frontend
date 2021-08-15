@@ -1,4 +1,5 @@
 export const theme = {
+  title: 'dark',
   breakPoints: {
     // 576px
     sm: '36rem',
@@ -10,29 +11,25 @@ export const theme = {
     xl: '75rem',
   },
   pallet: {
-    black: {
-      200: '#C4C4C4',
-      300: '#525252',
-      400: '#414141',
-      500: '#313131',
-      600: '#423F3E',
-      700: '#363333',
-    },
-    green: {
-      500: '#38A169',
-    },
-    red: {
-      400: '#f56565',
-      500: '#E53E3E',
-      600: '#C53030',
-    },
-    blue: {
-      400: '#3498db',
-    },
+    primary: '#525252',
+    secondary: '#363333',
+    shape: '#C4C4C4',
+    success: '#38A169',
+    error: '#C53030',
+    alert: '#3498db',
+  },
+  text: {
+    primary: '#ffff',
+    secondary: '#C4C4C4',
+    title: '#363333',
+    subTitle: '#525252',
   },
   shadows: {
     blue: {
       500: 'rgba(3, 102, 214, 0.8) 0px 0px 0px 3px',
+    },
+    red: {
+      500: 'rgba(252, 1, 95,0.8) 0px 0px 0px 3px',
     },
   },
 };

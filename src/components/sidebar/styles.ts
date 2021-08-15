@@ -2,8 +2,8 @@ import { darken } from 'polished';
 import styled from 'styled-components';
 
 export const Container = styled.aside`
-  background-color: ${(props) => props.theme.pallet.black[300]};
-  color: #ffff;
+  background-color: ${(props) => props.theme.pallet.primary};
+  color: ${(props) => props.theme.text.primary};
   font-weight: 500;
   width: 20%;
   font-weight: 500;
@@ -27,14 +27,14 @@ export const Body = styled.nav`
 `;
 
 export const SidebarButton = styled.div`
-  background-color: ${(props) => props.theme.pallet.black[400]};
+  background-color: ${(props) => props.theme.pallet.secondary};
 
   border-radius: 0.3rem;
 
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: ${(props) => darken(0.1, props.theme.pallet.black[400])};
+    background-color: ${(props) => darken(0.1, props.theme.pallet.secondary)};
   }
 
   > a {

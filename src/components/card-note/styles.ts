@@ -9,7 +9,7 @@ export const Container = styled.div`
 
   width: 100%;
   padding: 1rem;
-  background-color: #f7fafc;
+  background-color: ${(props) => props.theme.pallet.shape};
   border: 0;
   border-radius: 0.3rem;
   font-family: inherit;
@@ -21,7 +21,7 @@ export const Container = styled.div`
   > h2 {
     font-size: 1.1rem;
     margin: 0.2rem 0;
-    color: ${(props) => props.theme.pallet.black[500]};
+    color: ${(props) => props.theme.text.title};
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 15.625rem;
@@ -29,7 +29,7 @@ export const Container = styled.div`
 
   > h3 {
     display: inline-block;
-    color: ${(props) => props.theme.pallet.black[300]};
+    color: ${(props) => props.theme.text.subTitle};
     font-size: 1rem;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -56,13 +56,13 @@ export const OptionsButton = styled.button`
 
   transition: all 0.3s;
 
-  background-color: ${(props) => props.theme.pallet.black[300]};
-  color: ${(props) => props.theme.pallet.black[200]};
+  background-color: ${(props) => props.theme.pallet.primary};
+  color: ${(props) => props.theme.pallet.shape};
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 
   &:hover {
-    background-color: ${(props) => props.theme.pallet.black[400]};
+    background-color: ${(props) => props.theme.pallet.secondary};
     box-shadow:unset ;
   }
 `;
@@ -77,7 +77,7 @@ export const Options = styled(motion.ul)`
   z-index: 4;
 
   background-color: #fff;
-  color: ${(props) => props.theme.pallet.black[400]};
+  color: ${(props) => props.theme.pallet.secondary};
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
   min-width: 15rem;
@@ -93,7 +93,7 @@ export const Options = styled(motion.ul)`
       font-size: 0.9rem;
       font-family: inherit;
       background-color: transparent;
-      color: ${(props) => props.theme.pallet.black[300]};
+      color: #525252;
 
       border: 0;
       appearance: none;
@@ -107,13 +107,13 @@ export const Options = styled(motion.ul)`
       transition: all 0.3s;
 
       &:hover {
-        background-color: ${(props) => props.theme.pallet.black[200]};
+        background-color: ${(props) => props.theme.pallet.shape};
       }
     }
   }
 
   > li + li {
-    border-top: 1px solid ${(props) => props.theme.pallet.black[200]};
+    border-top: 1px solid ${(props) => props.theme.pallet.shape};
   }
 `;
 

@@ -20,14 +20,12 @@ export const Container = styled.div<ContainerProps>`
     font-family: inherit;
     font-size: 1rem;
 
-    border: 3px solid transparent;
-
     transition: border-color 0.3s;
 
     &:focus {
-      border-color: ${(props) => (props.isAError
-    ? props.theme.pallet.red[400]
-    : props.theme.pallet.black[600])};
+      box-shadow: ${(props) => (props.isAError
+    ? props.theme.shadows.red[500]
+    : props.theme.shadows.blue[500])};
     }
 
     resize: none;

@@ -1,6 +1,9 @@
 import Image from 'next/image';
-import { memo, useMemo, useState } from 'react';
+import {
+  memo, useContext, useMemo, useState,
+} from 'react';
 import { RiAddFill } from 'react-icons/ri';
+import { ThemeContext } from 'styled-components';
 
 import { IconButton, SearchInput } from '@components/forms';
 import { ThreeBallLoading } from '@components/progress';
@@ -10,10 +13,7 @@ import { Note } from '@types';
 import ErrorImage from '../../../public/error.png';
 import { NotesWrapper } from './notes-wrapper';
 import {
-  Container,
-  Header,
-  LoadingWrapper,
-  ErrorWrapper,
+  Container, Header, LoadingWrapper, ErrorWrapper,
 } from './styles';
 
 interface MiddleSidebarProps {
@@ -34,6 +34,7 @@ const MiddleSidebarBase = ({
   const [searchValue, setSearchValue] = useState('');
 
   const { addNewNote, editNote } = useUseCase();
+  const { pallet } = useContext(ThemeContext);
 
   const allData = useMemo(() => {
     const result = data.filter((noteData) => {
@@ -65,7 +66,11 @@ const MiddleSidebarBase = ({
       <Header>
         <div>
           <h1>{currentPage}</h1>
-          <IconButton onClick={handleAddButton} aria-label="add a new note">
+          <IconButton
+            onClick={handleAddButton}
+            aria-label="add a new note"
+            colorBackground={pallet.primary}
+          >
             <RiAddFill />
           </IconButton>
         </div>

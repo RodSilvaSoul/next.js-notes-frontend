@@ -12,5 +12,5 @@ export const Ball = styled(motion.span)`
   height: 1rem;
   width: 1rem;
   border-radius: 1rem;
-  background-color: ${(props) => props.theme.pallet.blue[400]};
+  background-color: ${(props) => props.theme.pallet.alert};
 `;
