@@ -29,6 +29,11 @@ const GlobalStyles = createGlobalStyle`
 	button {
 		cursor: pointer;
 	}
+
+	button[disabled] {
+		cursor: wait;
+		opacity: 0.8;
+	}
 `;
 
 export { GlobalStyles };

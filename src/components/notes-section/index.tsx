@@ -47,7 +47,7 @@ const NotesSectionComponent = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
   } = useForm({
     resolver: yupResolver(formNoteSchema),
@@ -136,6 +136,7 @@ const NotesSectionComponent = () => {
                     backgroundColor={theme.pallet.blue[400]}
                     type="submit"
                     aria-label="edit notes button"
+                    isLoading={isSubmitting}
                   >
                     update
                   </Button>
@@ -145,6 +146,7 @@ const NotesSectionComponent = () => {
                     backgroundColor={theme.pallet.green[500]}
                     type="submit"
                     aria-label="save notes button"
+                    isLoading={isSubmitting}
                   >
                     Save
                   </Button>

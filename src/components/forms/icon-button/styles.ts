@@ -7,6 +7,7 @@ export const Container = styled.button`
 
   background-color: ${(props) => props.theme.pallet.black[500]};
   font-family: inherit;
+  font-weight: 500;
   color: #ffff;
   border: 2px solid transparent;
   border-radius: 0.3rem;

@@ -28,7 +28,7 @@ interface ApplicationUseCase {
   cancelNewNote: () => void;
   editNote: (data: EditNoteData) => void;
   manageNote: (actionType: Actions, data: Note) => Promise<void>;
-  clearTrashNotes: () => void;
+  clearTrashNotes: () => Promise<void>;
   isNoteTextAreaVisible: boolean;
   dataToBeEdited: EditNoteData;
 }
@@ -43,7 +43,8 @@ export const ApplicationUseCaseProvider = ({
   children,
 }: ApplicationUseCaseProviderProps) => {
   const [isNoteTextAreaVisible, setIsNoteTextAreaVisible] = useState(false);
-  const { deleteMutation, updateMutation } = useQueryMutations();
+
+  const { deleteMutation, updateMutation, deleteMany } = useQueryMutations();
   const [dataToBeEdited, setDataToBeEdited] = useState<EditNoteData>({
     id: 0,
     note: '',
@@ -105,14 +106,23 @@ export const ApplicationUseCaseProvider = ({
     [deleteMutation, updateMutation],
   );
 
-  const clearTrashNotes = useCallback(() => {
-    const cachedData = queryClient.getQueryData<Note []>('notes');
-    if (cachedData) {
-      const dataToBeDeleted = cachedData.filter((noteData) => noteData?.isOnTrash);
+  const clearTrashNotes = useCallback(async () => {
+    const cachedData = queryClient.getQueryData<Note[]>('notes');
 
-      dataToBeDeleted.forEach(async (note) => {
-        await deleteMutation.mutateAsync(note.id);
-      });
+    if (cachedData) {
+      if (cachedData.length) {
+        const dataToBeDeleted = cachedData.filter(
+          (noteData) => noteData?.isOnTrash,
+        );
+        const clear = async () => {
+          dataToBeDeleted.forEach(async (noteData) => {
+            await deleteMany.mutateAsync(noteData.id);
+          });
+        };
+
+        await clear();
+        queryClient.invalidateQueries('notes');
+      }
     }
   }, []);
 

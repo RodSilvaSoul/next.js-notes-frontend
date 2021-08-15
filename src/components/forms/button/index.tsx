@@ -13,7 +13,7 @@ export const Button = ({
   children,
   ...rest
 }: ButtonProps) => (
-  <Container {...rest}>
+  <Container {...rest} disabled={isLoading}>
     {isLoading ? (
       <LoadingSpinner
         animate={{

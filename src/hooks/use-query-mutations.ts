@@ -94,9 +94,14 @@ export const useQueryMutations = () => {
     },
   );
 
+  const deleteMany = useMutation(async (id: number) => {
+    await api.delete(`/notes/${id}`);
+  });
+
   return {
     saveMutation,
     deleteMutation,
     updateMutation,
+    deleteMany,
   };
 };

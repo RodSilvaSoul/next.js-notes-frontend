@@ -1,10 +1,8 @@
 import Image from 'next/image';
-import {
-  memo, useMemo, useState,
-} from 'react';
+import { memo, useMemo, useState } from 'react';
 import { RiAddFill } from 'react-icons/ri';
 
-import { IconButton, SearchInput } from '@components/forms';
+import { Button, IconButton, SearchInput } from '@components/forms';
 import { ThreeBallLoading } from '@components/progress';
 import { useUseCase } from '@contexts/application-useCases';
 import { Note } from '@types';
@@ -12,7 +10,11 @@ import { Note } from '@types';
 import ErrorImage from '../../../public/error.png';
 import { NotesWrapper } from './notes-wrapper';
 import {
-  Container, Header, LoadingWrapper, ErrorWrapper,
+  Container,
+  Header,
+  LoadingWrapper,
+  ErrorWrapper,
+  ButtonWrapper,
 } from './styles';
 
 interface MiddleSidebarProps {
@@ -31,8 +33,9 @@ const MiddleSidebarBase = ({
   data,
 }: MiddleSidebarProps) => {
   const [searchValue, setSearchValue] = useState('');
+  const [isCleanerAllTrashData, setIsCleanerAllTrashData] = useState(false);
 
-  const { addNewNote, editNote } = useUseCase();
+  const { addNewNote, editNote, clearTrashNotes } = useUseCase();
 
   const allData = useMemo(() => {
     const result = data.filter((noteData) => {
@@ -59,6 +62,12 @@ const MiddleSidebarBase = ({
     addNewNote();
   }
 
+  const clearTrash = async () => {
+    setIsCleanerAllTrashData(true);
+    await clearTrashNotes();
+    setIsCleanerAllTrashData(false);
+  };
+
   return (
     <Container>
       <Header>
@@ -75,7 +84,12 @@ const MiddleSidebarBase = ({
           onChange={(event) => setSearchValue(event.currentTarget.value.toLowerCase())}
         />
       </Header>
-      {isLoading && (
+
+      <ButtonWrapper>
+        <Button onClick={clearTrash}> Clear all </Button>
+      </ButtonWrapper>
+
+      {(isCleanerAllTrashData || isLoading) && (
         <LoadingWrapper>
           <ThreeBallLoading />
           <p>Loading ...</p>

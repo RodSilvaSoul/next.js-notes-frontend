@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion';
 import {
   memo, useEffect, useRef, useState,
 } from 'react';
-import { AiOutlineMenu, AiOutlineClear } from 'react-icons/ai';
+import { AiOutlineMenu } from 'react-icons/ai';
 import { MdModeEdit, MdClear, MdRestore } from 'react-icons/md';
 import {
   RiDeleteBin6Fill,
@@ -32,7 +32,7 @@ export const CardNoteComponent = ({
   currentNodeOnClick,
 }: CardNoteProps) => {
   const [isMenuOptionsHidden, setIsMenuOptionsHidden] = useState(false);
-  const { manageNote, editNote, clearTrashNotes } = useUseCase();
+  const { manageNote, editNote } = useUseCase();
 
   const optionsRef = useRef<HTMLUListElement>(null);
 
@@ -170,14 +170,6 @@ export const CardNoteComponent = ({
                 >
                   Restore
                   <MdRestore />
-                </button>
-              </li>
-            )}
-            {isOnTrash && (
-              <li>
-                <button type="button" onClick={clearTrashNotes}>
-                  Clear all
-                  <AiOutlineClear />
                 </button>
               </li>
             )}
