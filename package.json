@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "server": "node ./mock-server"
+    "server": "json-server --watch json-server.js --port 3001 -d 2000"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.7.1",
@@ -45,6 +45,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "express": "^4.17.1",
     "faker": "^5.5.3",
+    "json-server": "^0.16.3",
     "typescript": "4.3.5"
   }
 }
