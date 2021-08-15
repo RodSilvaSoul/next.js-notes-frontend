@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "server": "json-server --watch json-server-data.js -p 8080 -d 2000"
+    "server": "node ./mock-server"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.7.1",
