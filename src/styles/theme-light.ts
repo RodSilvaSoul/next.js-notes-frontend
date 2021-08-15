@@ -1,5 +1,5 @@
-export const themeLighting = {
-  title: 'dark',
+export const themeLight = {
+  title: 'light',
   breakPoints: {
     // 576px
     sm: '36rem',
@@ -11,8 +11,8 @@ export const themeLighting = {
     xl: '75rem',
   },
   pallet: {
-    primary: '#525252',
-    secondary: '#363333',
+    primary: '#525',
+    secondary: '#7494EA',
     shape: '#C4C4C4',
     success: '#38A169',
     error: '#C53030',

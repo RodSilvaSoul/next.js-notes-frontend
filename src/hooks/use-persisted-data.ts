@@ -1,4 +1,4 @@
-import nookies from 'nookies';
+import { setCookie } from 'nookies';
 import {
   Dispatch, SetStateAction, useEffect, useState,
 } from 'react';
@@ -8,17 +8,17 @@ type Response<T> = [T, Dispatch<SetStateAction<T>>];
 export const userPersistedData = <T = any>(
   key: string,
   initialData: T,
+  defaultValue: T,
 ): Response<T> => {
   const [state, setState] = useState<T>(() => {
-    const data = nookies.get(null, key) as unknown as string;
-    if (data) {
-      return JSON.parse(data);
+    if (Object.keys(initialData).length) {
+      return initialData;
     }
-    return initialData;
+    return defaultValue;
   });
 
   useEffect(() => {
-    nookies.set(null, key, JSON.stringify(initialData), {
+    setCookie(null, key, JSON.stringify(state), {
       maxAge: 60 * 60 * 24 * 30,
       path: '/',
     });

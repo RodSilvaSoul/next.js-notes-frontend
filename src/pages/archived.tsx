@@ -1,4 +1,6 @@
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
+import { parseCookies } from 'nookies';
 import { useQuery } from 'react-query';
 import { api } from 'services';
 
@@ -48,3 +50,13 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { theme } = parseCookies(ctx);
+
+  return {
+    props: {
+      theme,
+    },
+  };
+};
