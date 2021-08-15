@@ -7,7 +7,6 @@ export type FilteredData = {
 };
 
 export const filterData = (data: Note[]): FilteredData => {
-  console.log(data);
   const trash = data.filter((note) => note.isOnTrash);
   const archived = data.filter((note) => note.isArchived);
   const notes = data.filter((note) => {

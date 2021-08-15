@@ -1,4 +1,3 @@
-import { darken } from 'polished';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -63,21 +62,5 @@ export const ErrorWrapper = styled.div`
     margin-top: 0.5rem;
     font-weight: 500;
     font-size: 1.4rem;
-  }
-`;
-
-export const ButtonWrapper = styled.div`
-  padding: 1rem;
-  border: 0;
-  border-radius: 0.3rem;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-  > button {
-    padding: 0.2rem 0.5rem;
-    background-color: ${(props) => props.theme.pallet.red[400]};
-
-    &:hover {
-      background-color: ${(props) => darken(0.1, props.theme.pallet.red[400])};
-    }
   }
 `;

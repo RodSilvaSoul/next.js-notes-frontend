@@ -5,7 +5,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { Button, InputInline, NoteTextArea } from '@components/forms';
-import { InputTag } from '@components/forms/input-tag';
 import { useUseCase } from '@contexts/application-useCases';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useQueryMutations } from '@hooks/use-query-mutations';
@@ -123,7 +122,6 @@ const NotesSectionComponent = () => {
                   autoComplete="off"
                   {...register('title')}
                 />
-                <InputTag />
               </Header>
               <NoteTextArea
                 error={errors.noteTitle}

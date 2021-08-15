@@ -8,7 +8,6 @@ import {
   useCallback,
   useState,
 } from 'react';
-import { queryClient } from 'services';
 
 import { Note } from '@types';
 
@@ -23,17 +22,18 @@ type EditNoteData = {
   isInView: boolean;
 };
 
-interface ApplicationUseCase {
+interface ApplicationUseCaseData {
   addNewNote: () => void;
   cancelNewNote: () => void;
   editNote: (data: EditNoteData) => void;
   manageNote: (actionType: Actions, data: Note) => Promise<void>;
-  clearTrashNotes: () => Promise<void>;
   isNoteTextAreaVisible: boolean;
   dataToBeEdited: EditNoteData;
 }
 
-const ApplicationUseCaseContext = createContext<ApplicationUseCase>({} as any);
+const ApplicationUseCaseContext = createContext<ApplicationUseCaseData>(
+  {} as any,
+);
 
 interface ApplicationUseCaseProviderProps {
   children: ReactNode;
@@ -44,7 +44,7 @@ export const ApplicationUseCaseProvider = ({
 }: ApplicationUseCaseProviderProps) => {
   const [isNoteTextAreaVisible, setIsNoteTextAreaVisible] = useState(false);
 
-  const { deleteMutation, updateMutation, deleteMany } = useQueryMutations();
+  const { deleteMutation, updateMutation } = useQueryMutations();
   const [dataToBeEdited, setDataToBeEdited] = useState<EditNoteData>({
     id: 0,
     note: '',
@@ -106,30 +106,9 @@ export const ApplicationUseCaseProvider = ({
     [deleteMutation, updateMutation],
   );
 
-  const clearTrashNotes = useCallback(async () => {
-    const cachedData = queryClient.getQueryData<Note[]>('notes');
-
-    if (cachedData) {
-      if (cachedData.length) {
-        const dataToBeDeleted = cachedData.filter(
-          (noteData) => noteData?.isOnTrash,
-        );
-        const clear = async () => {
-          dataToBeDeleted.forEach(async (noteData) => {
-            await deleteMany.mutateAsync(noteData.id);
-          });
-        };
-
-        await clear();
-        queryClient.invalidateQueries('notes');
-      }
-    }
-  }, []);
-
   return (
     <ApplicationUseCaseContext.Provider
       value={{
-        clearTrashNotes,
         dataToBeEdited,
         editNote,
         manageNote,
