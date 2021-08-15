@@ -66,9 +66,9 @@ const NotesSectionComponent = () => {
   function handleCancelButton() {
     editNote({
       id: 0,
-      isInView: false,
       note: '',
       title: '',
+      isInView: false,
       isArchived: false,
       isOnTrash: false,
     });
@@ -124,7 +124,7 @@ const NotesSectionComponent = () => {
                 />
               </Header>
               <NoteTextArea
-                error={errors.noteTitle}
+                error={errors.note}
                 aria-label="enter your note"
                 {...register('note')}
               />
