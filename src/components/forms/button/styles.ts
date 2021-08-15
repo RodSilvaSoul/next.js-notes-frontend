@@ -36,9 +36,9 @@ export const LoadingSpinner = styled(motion.div)`
   height: 1.5rem;
   width: 1.5rem;
 
-  border: 4px solid ${(props) => props.theme.pallet.secondary};
+  border: 4px solid #525252;
   border-radius: 1.5rem;
 
-  border-left-color: ${(props) => props.theme.pallet.secondary};
-  border-top: color ${(props) => props.theme.pallet.secondary};
+  border-left-color: #ffff;
+  border-top-color: #ffff;
 `;

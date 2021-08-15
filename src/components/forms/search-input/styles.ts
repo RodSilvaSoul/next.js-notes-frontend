@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.input`
-  color: ${(props) => props.theme.pallet.secondary};
+  color: ${(props) => props.theme.text.title};
   background-color: ${(props) => props.theme.pallet.shape};
   font-family: inherit;
   line-height: 1.5;
@@ -21,10 +21,11 @@ export const Container = styled.input`
 
   outline: none;
 
-
   transition: border-color 0.3s;
 
+  box-shadow: ${(props) => props.theme.shadows.black[500]};
   &:focus {
     box-shadow: ${(props) => props.theme.shadows.blue[500]};
   }
+
 `;

@@ -11,12 +11,13 @@ export const themeDark = {
     xl: '75rem',
   },
   pallet: {
-    primary: '#525252',
-    secondary: '#363333',
+    primary: '#1C1C1C',
+    secondary: '#525252',
     shape: '#C4C4C4',
     success: '#38A169',
     error: '#C53030',
     alert: '#3498db',
+    scrollBar: '#C4C4C4',
   },
   text: {
     primary: '#ffff',
@@ -30,6 +31,9 @@ export const themeDark = {
     },
     red: {
       500: 'rgba(252, 1, 95,0.8) 0px 0px 0px 3px',
+    },
+    black: {
+      500: 'rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px',
     },
   },
 };

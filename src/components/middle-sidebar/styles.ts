@@ -9,8 +9,6 @@ export const Container = styled.div`
   color: ${(props) => props.theme.text.primary};
 
   max-height: 100vh;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 `;
 
 export const Header = styled.div`
@@ -28,6 +26,8 @@ export const Header = styled.div`
       font-size: 1.5rem;
     }
   }
+
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 
 export const LoadingWrapper = styled.div`

@@ -11,16 +11,17 @@ export const themeLight = {
     xl: '75rem',
   },
   pallet: {
-    primary: '#525',
-    secondary: '#7494EA',
-    shape: '#C4C4C4',
+    primary: '#DDDDDD',
+    secondary: '#FFFFFC',
+    shape: '#FFFF',
     success: '#38A169',
     error: '#C53030',
     alert: '#3498db',
+    scrollBar: '#888888',
   },
   text: {
-    primary: '#ffff',
-    secondary: '#C4C4C4',
+    primary: '#525252',
+    secondary: '#363333',
     title: '#363333',
     subTitle: '#525252',
   },
@@ -30,6 +31,9 @@ export const themeLight = {
     },
     red: {
       500: 'rgba(252, 1, 95,0.8) 0px 0px 0px 3px',
+    },
+    black: {
+      500: 'rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px',
     },
   },
 };

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { darken } from 'polished';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -35,6 +36,8 @@ export const Container = styled.div`
     text-overflow: ellipsis;
     max-width: 15.625rem;
   }
+
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 
 export const OptionsButton = styled.button`
@@ -57,12 +60,10 @@ export const OptionsButton = styled.button`
   transition: all 0.3s;
 
   background-color: ${(props) => props.theme.pallet.primary};
-  color: ${(props) => props.theme.pallet.shape};
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-
+  color: ${(props) => props.theme.text.primary};
+  box-shadow: ${(props) => props.theme.shadows.black[500]};
   &:hover {
-    background-color: ${(props) => props.theme.pallet.secondary};
+    background-color: ${(props) => darken(0.1, props.theme.pallet.primary)};
     box-shadow:unset ;
   }
 `;
@@ -113,7 +114,7 @@ export const Options = styled(motion.ul)`
   }
 
   > li + li {
-    border-top: 1px solid ${(props) => props.theme.pallet.shape};
+    border-top: 1px solid #c4c4c4;
   }
 `;
 
