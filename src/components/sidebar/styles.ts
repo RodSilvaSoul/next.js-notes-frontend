@@ -7,13 +7,13 @@ export const Container = styled.aside`
   font-weight: 500;
   width: 20%;
   font-weight: 500;
+  padding: 1rem;
+  border-right: 2px solid ${(props) => props.theme.pallet.secondary};
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 
   @media (max-width: ${(props) => props.theme.breakPoints.md}) {
     width: 35%;
   }
-  padding: 1rem;
-  border-right: 2px solid ${(props) => props.theme.pallet.secondary};
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `;
 
 export const Head = styled.div`

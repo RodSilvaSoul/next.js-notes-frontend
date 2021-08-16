@@ -5,14 +5,10 @@ export const Container = styled.section`
   overflow: hidden;
   color: ${(props) => props.theme.text.primary};
   background-color: ${(props) => props.theme.pallet.primary};
-  width: 70%;
+  width: 100%;
 
   padding: 1rem 0.7rem;
-  min-height: 100vh;
-
-  @media (max-width: ${(props) => props.theme.breakPoints.md}) {
-    width: 100%;
-  }
+  min-height: 90vh;
 `;
 
 export const Header = styled.div`
@@ -40,15 +36,22 @@ export const InnerContainer = styled(motion.div)`
   height: 100%;
 `;
 
-export const AddNewNote = styled(motion.div)`
+export const AddNewNote = styled(motion.button)`
   display: flex;
   align-items: center;
   justify-content: center;
-
+  font-family: inherit;
+  color: inherit;
+  appearance: none;
+  background-color: transparent;
   flex-direction: column;
-
+  border: 0;
   > h2 {
     margin-top: 1rem;
+
+    &:hover {
+      filter: brightness(0.5);
+    }
   }
 
   width: 100%;

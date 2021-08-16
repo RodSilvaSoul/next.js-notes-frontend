@@ -1,13 +1,10 @@
 import Image from 'next/image';
 import {
-  memo, useContext, useMemo, useState,
+  memo, useMemo, useState,
 } from 'react';
-import { RiAddFill } from 'react-icons/ri';
-import { ThemeContext } from 'styled-components';
 
-import { IconButton, SearchInput } from '@components/forms';
+import { SearchInput } from '@components/forms';
 import { ThreeBallLoading } from '@components/progress';
-import { useUseCase } from '@contexts/application-useCases';
 import { Note } from '@types';
 
 import ErrorImage from '../../../public/error.png';
@@ -33,9 +30,6 @@ const MiddleSidebarBase = ({
 }: MiddleSidebarProps) => {
   const [searchValue, setSearchValue] = useState('');
 
-  const { addNewNote, editNote } = useUseCase();
-  const { pallet } = useContext(ThemeContext);
-
   const allData = useMemo(() => {
     const result = data.filter((noteData) => {
       if (searchValue) {
@@ -49,30 +43,11 @@ const MiddleSidebarBase = ({
     return result;
   }, [data, searchValue]);
 
-  function handleAddButton() {
-    editNote({
-      id: 0,
-      note: '',
-      title: '',
-      isInView: false,
-      isArchived: false,
-      isOnTrash: false,
-    });
-    addNewNote();
-  }
-
   return (
     <Container>
       <Header>
         <div>
           <h1>{currentPage}</h1>
-          <IconButton
-            onClick={handleAddButton}
-            aria-label="add a new note"
-            colorBackground={pallet.primary}
-          >
-            <RiAddFill />
-          </IconButton>
         </div>
         <SearchInput
           aria-label="Search for notes"

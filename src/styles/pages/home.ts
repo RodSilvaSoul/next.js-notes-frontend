@@ -10,9 +10,9 @@ export const Container = styled.main`
 export const InnerContainer = styled.div`
   display: flex;
   flex-wrap: wrap-reverse;
-  width: 100%;
+  width: 80%;
 
   @media (max-width: ${(props) => props.theme.breakPoints.md}) {
-    width: 70%;
+    width: 75%;
   }
 `;

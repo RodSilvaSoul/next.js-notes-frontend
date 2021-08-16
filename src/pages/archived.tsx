@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 import { api } from 'services';
 
 import { Sidebar, MiddleSidebar, NotesSection } from '@components/index';
-import { Container } from '@styles/pages';
+import { Container, InnerContainer } from '@styles/pages';
 import { Note } from '@types';
 import { filterData } from '@util/data-helpers';
 
@@ -37,15 +37,18 @@ export default function Home() {
           archivedCount={archivedCount}
           notesCount={notesCount}
           trashCount={trashCount}
-        />
-        <MiddleSidebar
           currentPage="Archived"
-          isError={isError}
-          isLoading={isLoading}
-          isSuccess={isSuccess}
-          data={dataFiltered.archived}
         />
-        <NotesSection />
+        <InnerContainer>
+          <MiddleSidebar
+            currentPage="Archived"
+            isError={isError}
+            isLoading={isLoading}
+            isSuccess={isSuccess}
+            data={dataFiltered.archived}
+          />
+          <NotesSection />
+        </InnerContainer>
       </Container>
     </>
   );

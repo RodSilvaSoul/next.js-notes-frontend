@@ -36,6 +36,7 @@ export default function Home() {
           archivedCount={archivedCount}
           notesCount={notesCount}
           trashCount={trashCount}
+          currentPage="Notes"
         />
         <InnerContainer>
           <MiddleSidebar

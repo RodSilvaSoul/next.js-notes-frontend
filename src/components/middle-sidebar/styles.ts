@@ -5,15 +5,14 @@ export const Container = styled.div`
   flex-direction: column;
 
   background-color: ${(props) => props.theme.pallet.secondary};
-  width: 30%;
   color: ${(props) => props.theme.text.primary};
 
   min-height: 100vh;
   max-height: 100vh;
 
-  @media (max-width: ${(props) => props.theme.breakPoints.md}) {
-    width: 100%;
-  }
+  width: 100%;
+  margin: ${(props) => (props.theme.title === 'dark' ? '0' : '0.7rem')};
+  margin-top: ${(props) => (props.theme.title === 'dark' ? '0' : '1rem')}
 `;
 
 export const Header = styled.div`

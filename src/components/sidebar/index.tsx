@@ -1,10 +1,10 @@
-import { IconButton } from 'components/forms';
 import Link from 'next/link';
 import { memo, useContext } from 'react';
 import { BsMoon } from 'react-icons/bs';
 import { FaSun } from 'react-icons/fa';
 import { ThemeContext } from 'styled-components';
 
+import { IconButton } from '@components/forms';
 import { useThemeController } from '@contexts/theme-controller';
 
 import {
@@ -12,22 +12,26 @@ import {
 } from './styles';
 
 interface SidebarProps {
-  trashCount: number | undefined;
-  archivedCount: number | undefined;
-  notesCount: number | undefined;
+  trashCount: number;
+  archivedCount: number;
+  notesCount: number;
+  currentPage: 'Trash' | 'Notes' | 'Archived'
 }
 
 const SidebarBase = ({
   archivedCount,
   notesCount,
   trashCount,
+  currentPage,
 }: SidebarProps) => {
   const { title } = useContext(ThemeContext);
   const { toggleTheme } = useThemeController();
   return (
     <Container>
       <Head>
-        <h1>Views </h1>
+        <h1>
+          {currentPage}
+        </h1>
         <IconButton aria-label="add a new view" onClick={toggleTheme}>
           {title === 'dark' ? <BsMoon /> : <FaSun />}
         </IconButton>

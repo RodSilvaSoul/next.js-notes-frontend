@@ -1,6 +1,8 @@
 import { AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { memo, useContext, useEffect } from 'react';
+import {
+  memo, useContext, useEffect, useRef,
+} from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ThemeContext } from 'styled-components';
 import * as yup from 'yup';
@@ -32,6 +34,7 @@ const formNoteSchema = yup.object().shape({
 });
 
 const NotesSectionComponent = () => {
+  const formRef = useRef<HTMLFormElement>(null);
   const { pallet } = useContext(ThemeContext);
   const {
     isNoteTextAreaVisible,
@@ -58,9 +61,9 @@ const NotesSectionComponent = () => {
       title: dataToBeEdited.title,
       note: dataToBeEdited.note,
     });
-
     if (dataToBeEdited.isInView) {
       addNewNote();
+      formRef.current?.focus();
     }
   }, [dataToBeEdited, reset, addNewNote]);
 
@@ -88,6 +91,18 @@ const NotesSectionComponent = () => {
     await saveMutation.mutateAsync(data);
   };
 
+  function handleAddNewNote() {
+    editNote({
+      id: 0,
+      note: '',
+      title: '',
+      isInView: false,
+      isArchived: false,
+      isOnTrash: false,
+    });
+    addNewNote();
+  }
+
   return (
     <Container>
       <AnimatePresence>
@@ -97,6 +112,7 @@ const NotesSectionComponent = () => {
             initial="enter"
             animate="show"
             exit="exit"
+            onClick={handleAddNewNote}
           >
             <Image
               alt="add new note"
@@ -104,7 +120,7 @@ const NotesSectionComponent = () => {
               height="250"
               width="250"
             />
-            <h2>Add a new note</h2>
+            <h2>Click to add a new note</h2>
           </AddNewNote>
         )}
         {isNoteTextAreaVisible && (
@@ -114,7 +130,7 @@ const NotesSectionComponent = () => {
             animate="show"
             exit="exit"
           >
-            <Form onSubmit={handleSubmit(handleSentNote)}>
+            <Form ref={formRef} tabIndex={-1} onSubmit={handleSubmit(handleSentNote)}>
               <Header>
                 <InputInline
                   error={errors.title}
