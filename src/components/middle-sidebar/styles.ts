@@ -5,10 +5,15 @@ export const Container = styled.div`
   flex-direction: column;
 
   background-color: ${(props) => props.theme.pallet.secondary};
-  width: 25%;
+  width: 30%;
   color: ${(props) => props.theme.text.primary};
 
+  min-height: 100vh;
   max-height: 100vh;
+
+  @media (max-width: ${(props) => props.theme.breakPoints.md}) {
+    width: 100%;
+  }
 `;
 
 export const Header = styled.div`

@@ -7,7 +7,6 @@ export const Container = styled.div`
   flex-direction: column;
 
   position: relative;
-
   width: 100%;
   padding: 1rem;
   background-color: ${(props) => props.theme.pallet.shape};
@@ -15,9 +14,8 @@ export const Container = styled.div`
   border-radius: 0.3rem;
   font-family: inherit;
   color: inherit;
-
+  max-width: 100%;
   cursor: pointer;
-  max-width: 18.625rem;
 
   > h2 {
     font-size: 1.1rem;
@@ -25,7 +23,7 @@ export const Container = styled.div`
     color: ${(props) => props.theme.text.title};
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 15.625rem;
+    max-width: 100%;
   }
 
   > h3 {
@@ -34,7 +32,7 @@ export const Container = styled.div`
     font-size: 1rem;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 15.625rem;
+    max-width: 100%;
   }
 
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;

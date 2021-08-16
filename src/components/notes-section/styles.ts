@@ -5,9 +5,14 @@ export const Container = styled.section`
   overflow: hidden;
   color: ${(props) => props.theme.text.primary};
   background-color: ${(props) => props.theme.pallet.primary};
-  width: 60%;
+  width: 70%;
 
   padding: 1rem 0.7rem;
+  min-height: 100vh;
+
+  @media (max-width: ${(props) => props.theme.breakPoints.md}) {
+    width: 100%;
+  }
 `;
 
 export const Header = styled.div`
